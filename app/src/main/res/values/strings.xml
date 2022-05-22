@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Earth Movers</string>
+    <string name="home">Home</string>
+    <string name="post_jobs">Post Jobs</string>
+    <string name="profile">Profile</string>
+    <string name="notification">Notification</string>
+    <string name="earth_nmovers">EARTH\nMOVERS</string>
+    <string name="get_your_dump_clean_in_a_click">Get your dump clean in a click</string>
+    <string name="intro_text_two">Get connected with qualified personnel</string>
+    <string name="intro_text_three">Earn xtra on earth movers with your dumptruck</string>
+    <string name="get_started">Get Started</string>
+    <string name="skip">Skip</string>
+    <string name="back_arrow_button">back arrow button</string>
+    <string name="login_to_your_account">login to your account</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="log_in">Log in</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="first_and_last_name">First and last name</string>
+    <string name="email">Email</string>
+    <string name="don_t_have_an_account_yet">Don\'t have an account yet;</string>
+    <string name="sign_up">Sign up</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account">already have an account;</string>
+</resources>
