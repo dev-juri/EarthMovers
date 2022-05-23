@@ -1,6 +1,5 @@
 package com.earthmovers.www.ui.onboarding
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
