@@ -11,8 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your theme here. -->
 
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="statusBarBackground">@android:color/transparent</item>
         <item name="windowNoTitle">true</item>
     </style>
 </resources>
