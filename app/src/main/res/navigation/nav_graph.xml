@@ -11,9 +11,6 @@
         <action
             android:id="@+id/action_splashFragment_to_onboardingFragment"
             app:destination="@id/onboardingFragment" />
-        <action
-            android:id="@+id/action_splashFragment_self"
-            app:destination="@id/splashFragment" />
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment"

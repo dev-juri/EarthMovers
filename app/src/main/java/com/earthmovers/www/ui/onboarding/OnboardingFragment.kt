@@ -61,11 +61,11 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
 
         binding.skip.setOnClickListener {
             timer.cancel()
-            findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToSignupFragment())
+            findNavController().navigate(R.id.action_onboardingFragment_to_signupFragment)
         }
 
         binding.getStarted.setOnClickListener {
-            findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToSignupFragment())
+            findNavController().navigate(R.id.action_onboardingFragment_to_signupFragment)
 
         }
     }

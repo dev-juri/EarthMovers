@@ -16,7 +16,7 @@ class SignupFragment: BaseFragment(R.layout.fragment_signup) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.login.setOnClickListener {
-            findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToLoginFragment())
+            findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
         }
     }
 }
