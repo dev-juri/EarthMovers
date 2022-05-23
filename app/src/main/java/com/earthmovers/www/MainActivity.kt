@@ -1,5 +1,6 @@
 package com.earthmovers.www
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.WindowManager
@@ -44,10 +45,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
+        window.apply {
+            navigationBarColor = Color.TRANSPARENT
+            statusBarColor = Color.TRANSPARENT
+            setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+        }
 
         (this as FragmentActivity).supportFragmentManager.registerFragmentLifecycleCallbacks(
             fragmentLifecycleCallbacks,
@@ -58,8 +63,8 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentNavHost) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNav.setupWithNavController(navController)
-
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -67,4 +72,5 @@ class MainActivity : AppCompatActivity() {
             fragmentLifecycleCallbacks
         )
     }
+
 }
