@@ -1,10 +1,8 @@
 package com.earthmovers.www
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -45,6 +43,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        requestWindowFeature(1)
+        window.apply {
+            setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+            statusBarColor = Color.TRANSPARENT
+        }
         setContentView(binding.root)
 
         (this as FragmentActivity).supportFragmentManager.registerFragmentLifecycleCallbacks(
