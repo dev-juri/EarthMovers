@@ -42,17 +42,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_EarthMovers)
         super.onCreate(savedInstanceState)
-
-
-        requestWindowFeature(1)
-        window.apply {
-            setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
-            statusBarColor = Color.TRANSPARENT
-        }
         setContentView(binding.root)
 
         (this as FragmentActivity).supportFragmentManager.registerFragmentLifecycleCallbacks(
