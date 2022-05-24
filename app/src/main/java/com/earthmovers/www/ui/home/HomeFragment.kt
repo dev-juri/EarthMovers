@@ -31,8 +31,6 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
 
 
         viewPagerAdapter = ImageSlideAdapter(imagesForSlider)
-
-
         binding.viewpager.adapter = viewPagerAdapter
         binding.indicator.setViewPager(binding.viewpager)
     }
