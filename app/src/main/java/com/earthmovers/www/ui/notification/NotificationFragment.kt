@@ -17,7 +17,7 @@ class NotificationFragment: BottomNavTopLevelFragment(R.layout.fragment_notifica
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val notificationList = listOf<Notification>(
+        val notificationList = listOf(
             Notification("Sam Perry accepted your offer", "10:06am 24th May 2022"),
             Notification("Tola Perry accepted your offer", "13:06am 24th May 2022"),
             Notification("Samson Perry accepted your offer", "11:06am 24th May 2022")
