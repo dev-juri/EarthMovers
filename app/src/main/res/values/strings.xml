@@ -23,4 +23,9 @@
     <string name="phone_number">Phone Number</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_have_an_account">already have an account;</string>
+    <string name="enter_job_details">Enter Job Details</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="site_location">Site location</string>
+    <string name="phone">Contact Phone No</string>
+    <string name="post">Post</string>
 </resources>
