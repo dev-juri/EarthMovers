@@ -40,7 +40,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:textAlignment="viewStart" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -76,7 +78,9 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:textAlignment="viewStart"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -113,7 +117,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:gravity="start"
+            android:textAlignment="viewStart"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -138,7 +144,6 @@
         android:text="@string/post"
         android:textAllCaps="false"
         android:textStyle="bold"
-        app:textFontWeight="600"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"
