@@ -31,6 +31,12 @@
     <string name="view_project">View Details</string>
     <string name="recently_posted">Recently Posted project</string>
     <string name="check_profile">Check Profile</string>
+    <string name="accept">Accept</string>
+    <string name="project_details">Project Details</string>
+    <string name="check_map">Check Live Maps</string>
     <string name="earn_xtra">Earn XTRA \nas a Dump truck Driver \non Earth Movers</string>
     <string name="get_dump_trashed">Get your dump trash \nand bins clean at a \nclick on Earth Movers</string>
+    <string name="view_profile">View profile</string>
+    <string name="job_details">Job Details</string>
+    <string name="image">Image</string>
 </resources>

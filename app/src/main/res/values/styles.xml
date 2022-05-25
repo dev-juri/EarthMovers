@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GreenPlaceholderTextStyle">
+        <item name="android:textColor">#43A047</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:paddingLeft">60dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingRight">60dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

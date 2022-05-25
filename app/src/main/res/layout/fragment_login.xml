@@ -130,19 +130,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/poppins"
-                android:paddingLeft="60dp"
-                android:paddingTop="10dp"
-                android:paddingRight="60dp"
-                android:paddingBottom="10dp"
                 android:text="@string/log_in"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 app:cornerRadius="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/forgot_password" />
+                app:layout_constraintTop_toBottomOf="@id/forgot_password"
+                style="@style/ButtonStyle" />
 
             <TextView
                 android:id="@+id/dont_have_acct"
