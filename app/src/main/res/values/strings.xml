@@ -43,4 +43,9 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="switch_mode">Switch to contractor mode</string>
     <string name="accepted_offer"><b color="#000000">4</b> \n<b color="#3BAE39">Accepted offers</b></string>
+    <string name="vendor_or_company">Vendor/Company details</string>
+    <string name="describe_your_self">Description</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="enter_truck_plate_number">Enter Truck Plate Number</string>
+    <string name="submit">Submit</string>
 </resources>
