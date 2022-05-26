@@ -39,4 +39,8 @@
     <string name="view_profile">View profile</string>
     <string name="job_details">Job Details</string>
     <string name="image">Image</string>
+    <string name="my_profile">My Profile</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="switch_mode">Switch to contractor mode</string>
+    <string name="accepted_offer"><b color="#000000">4</b> \n<b color="#3BAE39">Accepted offers</b></string>
 </resources>
