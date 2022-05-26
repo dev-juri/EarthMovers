@@ -15,8 +15,9 @@ import com.earthmovers.www.databinding.ActivityMainBinding
 import com.earthmovers.www.utils.BottomNavFragment
 import com.earthmovers.www.utils.setGone
 import com.earthmovers.www.utils.setVisible
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
         crossinline bindingInflater: (LayoutInflater) -> T

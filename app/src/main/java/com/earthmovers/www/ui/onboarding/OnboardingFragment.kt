@@ -1,5 +1,6 @@
 package com.earthmovers.www.ui.onboarding
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -27,7 +28,7 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
-        val timer = object : CountDownTimer(9000, 1000) {
+        val timer = object : CountDownTimer(8000, 1000) {
             @RequiresApi(Build.VERSION_CODES.M)
             override fun onTick(p0: Long) {
                 when {
@@ -97,10 +98,12 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
 
         binding.skip.setOnClickListener {
             timer.cancel()
+            onboardingSuccessful()
             findNavController().navigate(R.id.action_onboardingFragment_to_signupFragment)
         }
 
         binding.getStarted.setOnClickListener {
+            onboardingSuccessful()
             findNavController().navigate(R.id.action_onboardingFragment_to_signupFragment)
 
         }
@@ -112,5 +115,13 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
         (activity as AppCompatActivity).window.clearFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
+    }
+
+    private fun onboardingSuccessful() {
+        val sharedPref = (activity as AppCompatActivity).getPreferences(Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putBoolean("isUserFirstTime", false)
+            apply()
+        }
     }
 }

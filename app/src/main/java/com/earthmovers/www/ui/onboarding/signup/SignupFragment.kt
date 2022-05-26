@@ -21,6 +21,9 @@ class SignupFragment : BaseFragment(R.layout.fragment_signup) {
 
         validateFields()
 
+        binding.backButton.setOnClickListener {
+
+        }
         binding.login.setOnClickListener {
             findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
         }

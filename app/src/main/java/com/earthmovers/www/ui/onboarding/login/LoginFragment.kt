@@ -21,6 +21,14 @@ class LoginFragment: BaseFragment(R.layout.fragment_login) {
 
         validateFields()
 
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.signUp.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+        }
+
         binding.loginButton.setOnClickListener {
             val email = binding.emailBox.editText?.text.toString()
             val password = binding.passwordBox.editText?.text.toString()
