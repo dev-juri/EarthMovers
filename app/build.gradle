@@ -32,11 +32,18 @@ android {
         viewBinding true
     }
 
+    def secretsPropertiesFile = rootProject.file("secrets.properties")
+    def secretsProperties = new Properties()
+    secretsProperties.load(new FileInputStream(secretsPropertiesFile))
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", "\"" + secretsProperties['EARTHMOVERS_PRODUCTION_URL'] + "\""
+        }
+        debug {
+            buildConfigField "String", "BASE_URL", "\"" + secretsProperties['EARTHMOVERS_BASE_URL'] + "\""
         }
     }
     compileOptions {
