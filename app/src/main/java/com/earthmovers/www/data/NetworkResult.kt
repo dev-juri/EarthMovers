@@ -14,3 +14,9 @@ sealed class NetworkResult<out R> {
         }
     }
 }
+
+enum class State {
+    SUCCESS,
+    LOADING,
+    ERROR
+}

@@ -6,11 +6,17 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.earthmovers.www.R
+import com.earthmovers.www.ui.onboarding.OnboardingViewModel
 import com.earthmovers.www.utils.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : BaseFragment(R.layout.fragment_splash) {
+
+    private val viewModel: OnboardingViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,8 +29,14 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
             if (isUserFirstTime) {
                 findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
             } else {
-                //findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                viewModel.user.observe(viewLifecycleOwner) {
+                    if (it != null) {
+                        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+                    } else {
+                        findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                    }
+                }
+
             }
         }, 2000)
     }
