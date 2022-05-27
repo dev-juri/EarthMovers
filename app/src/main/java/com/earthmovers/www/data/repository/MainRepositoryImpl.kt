@@ -37,7 +37,7 @@ class MainRepositoryImpl @Inject constructor(
                     NetworkResult.Error("Incorrect username or password")
                 }
             } catch (e: Exception) {
-                NetworkResult.Error("Connection Error, please try again")
+                NetworkResult.Error("Incorrect username or password")
             }
         }
 
@@ -54,7 +54,7 @@ class MainRepositoryImpl @Inject constructor(
                     NetworkResult.Error("User exists, proceed to login")
                 }
             } catch (e: Exception) {
-                NetworkResult.Error("Connection Error, please try again")
+                NetworkResult.Error("User exists, proceed to login")
             }
         }
 }
