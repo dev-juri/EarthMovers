@@ -44,8 +44,8 @@ class LoginFragment: BaseFragment(R.layout.fragment_login) {
         }
 
         binding.loginButton.setOnClickListener {
-            val email = binding.emailBox.editText?.text.toString()
-            val password = binding.passwordBox.editText?.text.toString()
+            val email = binding.emailBox.editText?.text.toString().trim()
+            val password = binding.passwordBox.editText?.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(

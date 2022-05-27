@@ -43,11 +43,11 @@ class SignupFragment : BaseFragment(R.layout.fragment_signup) {
         }
 
         binding.signupButton.setOnClickListener {
-            val fullName = binding.fullNameBox.editText?.text.toString()
-            val email = binding.emailBox.editText?.text.toString()
-            val phoneNumber = binding.numberBox.editText?.text.toString()
-            val password = binding.passwordBox.editText?.text.toString()
-            val confirmPassword = binding.confirmPasswordBox.editText?.text.toString()
+            val fullName = binding.fullNameBox.editText?.text.toString().trim()
+            val email = binding.emailBox.editText?.text.toString().trim()
+            val phoneNumber = binding.numberBox.editText?.text.toString().trim()
+            val password = binding.passwordBox.editText?.text.toString().trim()
+            val confirmPassword = binding.confirmPasswordBox.editText?.text.toString().trim()
 
             if (fullName.isEmpty() || email.isEmpty()
                 || password.isEmpty() || confirmPassword.isEmpty() || phoneNumber.isEmpty()
