@@ -1,8 +1,11 @@
 package com.earthmovers.www.data.mapper
 
+import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
+import com.earthmovers.www.data.local.entity.DbRecentPost
 import com.earthmovers.www.data.local.entity.DbUser
 import com.earthmovers.www.data.remote.LoginResponseBody
+import com.earthmovers.www.data.remote.PostsResponseBody
 import com.earthmovers.www.data.remote.RegisterResponseBody
 
 fun RegisterResponseBody.toDatabaseModel(): DbUser {
@@ -40,3 +43,38 @@ fun LoginResponseBody.toDatabaseModel(): DbUser {
         )
     }
 }
+
+fun PostsResponseBody.toDbModel(): Array<DbRecentPost> {
+    return response.map {
+        DbRecentPost(
+            id = it._id,
+            name = it.name,
+            src = it.src,
+            phone = it.phone,
+            projectHighlight = it.details,
+            location = it.location,
+            owner = it.owner,
+            image = it.image,
+            createdAt = it.createdAt,
+            updatedAt = it.updatedAt
+        )
+    }.toTypedArray()
+}
+
+fun List<DbRecentPost>.toDomainPost(): List<RecentProject> {
+    return map{
+        RecentProject(
+            _id = it.id,
+            name = it.name,
+            src = it.src,
+            phone = it.phone,
+            projectHighlight = it.projectHighlight,
+            location = it.location,
+            owner = it.owner,
+            image = it.image,
+            createdAt = it.createdAt,
+            updatedAt = it.updatedAt
+        )
+    }
+}
+

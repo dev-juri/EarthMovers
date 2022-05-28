@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.earthmovers.www.data.RecentProject
+import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.databinding.ProjectListItemBinding
 
 class RecentProjectsAdapter :

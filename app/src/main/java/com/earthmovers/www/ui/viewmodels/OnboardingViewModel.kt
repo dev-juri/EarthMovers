@@ -1,25 +1,22 @@
-package com.earthmovers.www.ui.onboarding
+package com.earthmovers.www.ui.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.earthmovers.www.data.NetworkResult
 import com.earthmovers.www.data.State
-import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.remote.LoginBody
 import com.earthmovers.www.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(private val repository: MainRepository) :
     ViewModel() {
 
-    private var _user = MutableLiveData<User?>()
-    val user get() = _user
+    val user = repository.fetchUserDetailsIfAny()
 
     private val _dataState = MutableLiveData<State?>()
     val dataState get() = _dataState
@@ -27,11 +24,6 @@ class OnboardingViewModel @Inject constructor(private val repository: MainReposi
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage get() = _errorMessage
 
-    init {
-        viewModelScope.launch {
-            _user = repository.fetchUserDetailsIfAny() as MutableLiveData<User?>
-        }
-    }
     fun loginUser(loginBody: LoginBody) {
         viewModelScope.launch {
             _dataState.postValue(State.LOADING)
@@ -58,10 +50,10 @@ class OnboardingViewModel @Inject constructor(private val repository: MainReposi
 
             val requestBody = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("name",name)
-                .addFormDataPart("email",email)
-                .addFormDataPart("phone",phone)
-                .addFormDataPart("password",password)
+                .addFormDataPart("name", name)
+                .addFormDataPart("email", email)
+                .addFormDataPart("phone", phone)
+                .addFormDataPart("password", password)
                 .build()
 
             when (val result = repository.register(requestBody)) {

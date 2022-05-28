@@ -30,3 +30,21 @@ data class LoginResponseBody(
     val id: String,
     val response: NetworkUserModel
 )
+
+data class PostsResponseBody(
+    val response: ArrayList<PostDetails>
+)
+
+data class PostDetails(
+    val _id: String,
+    val name: String,
+    val src: String,
+    val phone: String,
+    val details: String,
+    val location: String,
+    val owner: String,
+    val image: String,
+    val createdAt: String,
+    val updatedAt: String,
+    val __v: Int
+)

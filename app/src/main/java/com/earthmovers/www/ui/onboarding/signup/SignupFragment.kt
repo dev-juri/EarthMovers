@@ -13,7 +13,7 @@ import com.earthmovers.www.R
 import com.earthmovers.www.data.State
 import com.earthmovers.www.databinding.FragmentSignupBinding
 import com.earthmovers.www.ui.ProgressDialog
-import com.earthmovers.www.ui.onboarding.OnboardingViewModel
+import com.earthmovers.www.ui.viewmodels.OnboardingViewModel
 import com.earthmovers.www.utils.BaseFragment
 import com.earthmovers.www.utils.isOnline
 import com.earthmovers.www.utils.viewBinding

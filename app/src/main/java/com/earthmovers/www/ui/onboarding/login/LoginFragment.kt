@@ -14,7 +14,7 @@ import com.earthmovers.www.data.State
 import com.earthmovers.www.data.remote.LoginBody
 import com.earthmovers.www.databinding.FragmentLoginBinding
 import com.earthmovers.www.ui.ProgressDialog
-import com.earthmovers.www.ui.onboarding.OnboardingViewModel
+import com.earthmovers.www.ui.viewmodels.OnboardingViewModel
 import com.earthmovers.www.utils.BaseFragment
 import com.earthmovers.www.utils.isOnline
 import com.earthmovers.www.utils.viewBinding

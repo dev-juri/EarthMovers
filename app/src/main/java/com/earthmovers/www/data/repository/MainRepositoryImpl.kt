@@ -3,9 +3,12 @@ package com.earthmovers.www.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.earthmovers.www.data.NetworkResult
+import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.local.dao.EarthMoversDao
 import com.earthmovers.www.data.mapper.toDatabaseModel
+import com.earthmovers.www.data.mapper.toDbModel
+import com.earthmovers.www.data.mapper.toDomainPost
 import com.earthmovers.www.data.mapper.toDomainUSer
 import com.earthmovers.www.data.remote.*
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,7 +22,7 @@ class MainRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : MainRepository {
 
-    override suspend fun fetchUserDetailsIfAny(): LiveData<User?> =
+    override fun fetchUserDetailsIfAny(): LiveData<User?> =
         Transformations.map(localSource.getLoggedUserInfo()) {
             it.toDomainUSer()
         }
@@ -56,5 +59,29 @@ class MainRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
                 NetworkResult.Error("User exists, proceed to login")
             }
+        }
+
+    override suspend fun fetchRemoteRecentPosts(): NetworkResult<PostsResponseBody> =
+        withContext(dispatcher) {
+            try {
+                val response = remoteSource.fetchRecentPosts()
+                if (response.isSuccessful) {
+                    val data = (response.body() as PostsResponseBody)
+
+                    if (data.response.isNotEmpty()) {
+                        localSource.saveRecentPosts(*data.toDbModel())
+                    }
+                    NetworkResult.Success(data)
+                } else {
+                    NetworkResult.Error("Something went wrong")
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
+        }
+
+    override fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>> =
+        Transformations.map(localSource.fetchAllRecentPosts()) {
+            it.toDomainPost()
         }
 }

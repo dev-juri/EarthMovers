@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.earthmovers.www.R
-import com.earthmovers.www.ui.onboarding.OnboardingViewModel
+import com.earthmovers.www.ui.viewmodels.OnboardingViewModel
 import com.earthmovers.www.utils.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
