@@ -28,6 +28,8 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.fetchRemotePosts()
+
         imagesForSlider = listOf(
             ImageDetails(
                 getString(R.string.earn_xtra),
@@ -49,7 +51,7 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
         viewModel.user.observe(viewLifecycleOwner) {
             binding.welcome.text = "Welcome \n${(it?.name)?.split(" ")?.get(0)}"
         }
-        
+
         viewModel.posts.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.noPostEmptyState.setVisible()
