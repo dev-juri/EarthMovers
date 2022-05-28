@@ -79,7 +79,7 @@ class LoginFragment: BaseFragment(R.layout.fragment_login) {
     private fun validateFields() {
         binding.emailBox.editText?.addTextChangedListener {
             when {
-                !Patterns.EMAIL_ADDRESS.matcher(it.toString()).matches() -> {
+                !Patterns.EMAIL_ADDRESS.matcher(it.toString().trim()).matches() -> {
                     binding.emailBox.apply {
                         isErrorEnabled = true
                         error = "Invalid Email Address"

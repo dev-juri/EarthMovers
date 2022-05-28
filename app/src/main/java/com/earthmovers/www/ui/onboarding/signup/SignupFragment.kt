@@ -97,7 +97,7 @@ class SignupFragment : BaseFragment(R.layout.fragment_signup) {
         }
         binding.emailBox.editText?.addTextChangedListener {
             when {
-                !Patterns.EMAIL_ADDRESS.matcher(it.toString()).matches() -> {
+                !Patterns.EMAIL_ADDRESS.matcher(it.toString().trim()).matches() -> {
                     binding.emailBox.apply {
                         isErrorEnabled = true
                         error = "Invalid Email Address"
@@ -141,7 +141,7 @@ class SignupFragment : BaseFragment(R.layout.fragment_signup) {
                     }
                     areFieldsValidated = false
                 }
-                it.length < 8 -> {
+                it.trim().length < 8 -> {
                     binding.passwordBox.apply {
                         error = "Password not long enough"
                         isErrorEnabled = true
@@ -163,7 +163,7 @@ class SignupFragment : BaseFragment(R.layout.fragment_signup) {
                     }
                     areFieldsValidated = false
                 }
-                it.toString() != binding.passwordBox.editText?.text.toString() -> {
+                it.trim().toString() != binding.passwordBox.editText?.text.toString() -> {
                     binding.confirmPasswordBox.apply {
                         error = "The passwords do not match"
                         isErrorEnabled = true
