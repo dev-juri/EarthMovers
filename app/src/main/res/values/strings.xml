@@ -49,4 +49,5 @@
     <string name="enter_truck_plate_number">Enter Truck Plate Number</string>
     <string name="submit">Submit</string>
     <string name="no_post_yet">No post yet.</string>
+    <string name="selected_image_preview">Selected Image Preview</string>
 </resources>
