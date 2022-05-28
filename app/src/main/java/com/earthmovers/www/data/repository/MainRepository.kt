@@ -19,7 +19,7 @@ interface MainRepository {
 
     suspend fun register(signupBody: RequestBody): NetworkResult<RegisterResponseBody>
 
-    suspend fun fetchRemoteRecentPosts(): NetworkResult<PostsResponseBody>
+    suspend fun fetchPosts(): NetworkResult<PostsResponseBody>
 
     fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>>
 }

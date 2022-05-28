@@ -28,7 +28,7 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchRemotePosts()
+        viewModel.fetchPosts()
 
         imagesForSlider = listOf(
             ImageDetails(
@@ -68,6 +68,6 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
 
     override fun onStart() {
         super.onStart()
-        viewModel.fetchRemotePosts()
+        viewModel.fetchPosts()
     }
 }

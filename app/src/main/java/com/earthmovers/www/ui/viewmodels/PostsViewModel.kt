@@ -13,13 +13,9 @@ class PostsViewModel @Inject constructor(private val repository: MainRepository)
     val posts = repository.fetchRecentPostsFromDb()
     val user = repository.fetchUserDetailsIfAny()
 
-    init {
-        fetchRemotePosts()
-    }
-
-    fun fetchRemotePosts() {
+    fun fetchPosts() {
         viewModelScope.launch {
-            repository.fetchRemoteRecentPosts()
+            repository.fetchPosts()
         }
     }
 }

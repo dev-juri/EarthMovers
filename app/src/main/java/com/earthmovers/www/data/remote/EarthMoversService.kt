@@ -8,12 +8,13 @@ import retrofit2.http.POST
 
 interface EarthMoversService {
 
+    @GET("/posts")
+    suspend fun fetchPosts(): Response<PostsResponseBody>
+
     @POST("/register")
     suspend fun register(@Body body: RequestBody): Response<RegisterResponseBody>
 
     @POST("/login")
     suspend fun login(@Body loginBody: LoginBody): Response<LoginResponseBody>
 
-    @GET("/posts")
-    suspend fun fetchRecentPosts(): Response<PostsResponseBody>
 }

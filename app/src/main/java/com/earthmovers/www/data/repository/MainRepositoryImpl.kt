@@ -61,10 +61,10 @@ class MainRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun fetchRemoteRecentPosts(): NetworkResult<PostsResponseBody> =
+    override suspend fun fetchPosts(): NetworkResult<PostsResponseBody> =
         withContext(dispatcher) {
             try {
-                val response = remoteSource.fetchRecentPosts()
+                val response = remoteSource.fetchPosts()
                 if (response.isSuccessful) {
                     val data = (response.body() as PostsResponseBody)
 
