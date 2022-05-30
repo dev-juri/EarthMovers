@@ -48,3 +48,12 @@ data class PostDetails(
     val updatedAt: String,
     val __v: Int
 )
+
+data class MakePostResponseBody(
+    val message: String,
+    val token: String,
+    val id: String,
+    val src: String,
+    val phone: String,
+    val post: PostDetails
+)

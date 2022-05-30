@@ -1,5 +1,6 @@
 package com.earthmovers.www.data.remote
 
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -17,4 +18,6 @@ interface EarthMoversService {
     @POST("/login")
     suspend fun login(@Body loginBody: LoginBody): Response<LoginResponseBody>
 
+    @POST("/post")
+    suspend fun makePost(@Body postBody: MultipartBody): Response<MakePostResponseBody>
 }

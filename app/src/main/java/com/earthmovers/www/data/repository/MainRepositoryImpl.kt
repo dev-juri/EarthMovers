@@ -13,6 +13,7 @@ import com.earthmovers.www.data.mapper.toDomainUSer
 import com.earthmovers.www.data.remote.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
@@ -83,5 +84,21 @@ class MainRepositoryImpl @Inject constructor(
     override fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>> =
         Transformations.map(localSource.fetchAllRecentPosts()) {
             it.toDomainPost()
+        }
+
+    override suspend fun makePost(postBody: MultipartBody): NetworkResult<MakePostResponseBody> =
+        withContext(dispatcher) {
+            try {
+                val response = remoteSource.makePost(postBody)
+                if (response.isSuccessful) {
+                    val data = (response.body() as MakePostResponseBody)
+
+                    NetworkResult.Success(data)
+                } else {
+                    NetworkResult.Error("Something went wrong")
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
         }
 }

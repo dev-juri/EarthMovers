@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import com.earthmovers.www.data.NetworkResult
 import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
-import com.earthmovers.www.data.remote.LoginBody
-import com.earthmovers.www.data.remote.LoginResponseBody
-import com.earthmovers.www.data.remote.PostsResponseBody
-import com.earthmovers.www.data.remote.RegisterResponseBody
+import com.earthmovers.www.data.remote.*
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 
@@ -22,4 +20,6 @@ interface MainRepository {
     suspend fun fetchPosts(): NetworkResult<PostsResponseBody>
 
     fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>>
+
+    suspend fun makePost(postBody: MultipartBody): NetworkResult<MakePostResponseBody>
 }
