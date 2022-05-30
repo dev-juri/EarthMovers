@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.earthmovers.www.R
 import com.earthmovers.www.data.State
-import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.databinding.FragmentPostJobBinding
 import com.earthmovers.www.ui.ProgressDialog
 import com.earthmovers.www.ui.viewmodels.PostsViewModel
@@ -25,7 +24,6 @@ class PostJobFragment : BottomNavTopLevelFragment(R.layout.fragment_post_job) {
     private val viewModel by viewModels<PostsViewModel>()
     private val progressDialog = ProgressDialog()
 
-    private lateinit var userDetails: User
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
