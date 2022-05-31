@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
@@ -62,24 +63,24 @@ class MainRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun fetchPosts(): NetworkResult<PostsResponseBody> =
-        withContext(dispatcher) {
-            try {
-                val response = remoteSource.fetchPosts()
-                if (response.isSuccessful) {
-                    val data = (response.body() as PostsResponseBody)
+    override suspend fun fetchPosts(): NetworkResult<PostsResponseBody> = withContext(dispatcher) {
+        try {
+            val fetchResponse = remoteSource.fetchRemotePosts()
 
-                    if (data.response.isNotEmpty()) {
-                        localSource.saveRecentPosts(*data.toDbModel())
-                    }
-                    NetworkResult.Success(data)
-                } else {
-                    NetworkResult.Error("Something went wrong")
-                }
-            } catch (e: Exception) {
-                NetworkResult.Error("Something went wrong, please try again.")
+            Timber.tag("POST").d("Endpoint called")
+            if (fetchResponse.isSuccessful) {
+
+                val data = (fetchResponse.body() as PostsResponseBody)
+                localSource.saveRecentPosts(*data.toDbModel())
+
+                NetworkResult.Success(data)
+            } else {
+                NetworkResult.Error("Something went wrong")
             }
+        } catch (e: Exception) {
+            NetworkResult.Error("Something went wrong, please try again.")
         }
+    }
 
     override fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>> =
         Transformations.map(localSource.fetchAllRecentPosts()) {
