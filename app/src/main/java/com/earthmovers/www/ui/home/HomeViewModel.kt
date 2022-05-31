@@ -14,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
 
+
     val posts = repository.fetchRecentPostsFromDb()
     val user = repository.fetchUserDetailsIfAny()
 
@@ -23,7 +24,6 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository) 
     init {
         getRemotePosts()
     }
-
     fun getRemotePosts() {
         Timber.tag("POST").d("getRemotePost called")
 

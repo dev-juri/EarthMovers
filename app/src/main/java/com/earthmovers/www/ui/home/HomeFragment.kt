@@ -14,7 +14,6 @@ import com.earthmovers.www.utils.setGone
 import com.earthmovers.www.utils.setVisible
 import com.earthmovers.www.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
@@ -26,18 +25,12 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
     private lateinit var imagesForSlider: List<ImageDetails>
     private lateinit var recentProjectRecyclerAdapter: RecentProjectsAdapter
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         observeDataState()
-
-        binding.welcome.setOnClickListener {
-
-            Timber.tag("POST").d("FUNCTION SHOULD BE CALLED")
-            viewModel.getRemotePosts()
-            Timber.tag("POST").d("CALLED")
-        }
-
+        viewModel.getRemotePosts()
         imagesForSlider = listOf(
             ImageDetails(
                 getString(R.string.earn_xtra),

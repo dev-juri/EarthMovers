@@ -29,7 +29,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun login(loginBody: LoginBody): NetworkResult<LoginResponseBody> =
         withContext(dispatcher) {
-            try {
+            return@withContext try {
                 val response = remoteSource.login(loginBody)
                 if (response.isSuccessful && (response.body() as LoginResponseBody).message == "Login Succesful") {
                     val data = response.body() as LoginResponseBody
@@ -46,7 +46,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun register(signupBody: RequestBody): NetworkResult<RegisterResponseBody> =
         withContext(dispatcher) {
-            try {
+            return@withContext try {
                 val response = remoteSource.register(signupBody)
                 if (response.isSuccessful && (response.body() as RegisterResponseBody).message == "Login Successful") {
                     val data = response.body() as RegisterResponseBody
@@ -68,7 +68,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun makePost(postBody: MultipartBody): NetworkResult<MakePostResponseBody> =
         withContext(dispatcher) {
-            try {
+            return@withContext try {
                 val response = remoteSource.makePost(postBody)
                 if (response.isSuccessful) {
                     val data = (response.body() as MakePostResponseBody)
@@ -84,7 +84,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun createVendor(createVendorBody: MultipartBody): NetworkResult<CreateVendorResponse> =
         withContext(dispatcher) {
-            try {
+            return@withContext try {
                 val response = remoteSource.createVendor(createVendorBody)
                 if (response.isSuccessful) {
                     val data = (response.body() as CreateVendorResponse)
@@ -100,7 +100,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel> =
         withContext(dispatcher) {
-            try {
+            return@withContext try {
                 val response = remoteSource.getUserWithId(getUserBody)
                 if (response.isSuccessful && (response.body() as NetworkUserModel).name.isNotEmpty()) {
                     val data = (response.body() as NetworkUserModel)
@@ -116,7 +116,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getAllRemotePosts(): NetworkResult<PostsResponseBody> =
         withContext(dispatcher) {
-            try {
+            return@withContext try {
                 val response = remoteSource.getAllRemotePosts()
                 if (response.isSuccessful) {
                     val data = response.body() as PostsResponseBody
