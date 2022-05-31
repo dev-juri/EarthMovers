@@ -9,28 +9,34 @@ import com.earthmovers.www.adapters.ImageSlideAdapter
 import com.earthmovers.www.adapters.RecentProjectsAdapter
 import com.earthmovers.www.data.State
 import com.earthmovers.www.databinding.FragmentHomeBinding
-import com.earthmovers.www.ui.viewmodels.PostsViewModel
 import com.earthmovers.www.utils.BottomNavTopLevelFragment
 import com.earthmovers.www.utils.setGone
 import com.earthmovers.www.utils.setVisible
 import com.earthmovers.www.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
+    private val viewModel by viewModels<HomeViewModel>()
+
     private lateinit var viewPagerAdapter: ImageSlideAdapter
     private lateinit var imagesForSlider: List<ImageDetails>
     private lateinit var recentProjectRecyclerAdapter: RecentProjectsAdapter
 
-    private val viewModel: PostsViewModel by viewModels()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchRemotePosts()
         observeDataState()
+
+        binding.welcome.setOnClickListener {
+
+            Timber.tag("POST").d("FUNCTION SHOULD BE CALLED")
+            viewModel.getRemotePosts()
+            Timber.tag("POST").d("CALLED")
+        }
 
         imagesForSlider = listOf(
             ImageDetails(
@@ -53,7 +59,6 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
         viewModel.user.observe(viewLifecycleOwner) {
             binding.welcome.text = "Welcome \n${(it?.name)?.split(" ")?.get(0)}"
         }
-
         viewModel.posts.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.noPostEmptyState.setVisible()
@@ -68,10 +73,6 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.fetchRemotePosts()
-    }
 
     private fun observeDataState() {
         viewModel.dataState.observe(viewLifecycleOwner) {

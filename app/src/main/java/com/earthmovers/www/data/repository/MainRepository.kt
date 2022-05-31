@@ -17,8 +17,6 @@ interface MainRepository {
 
     suspend fun register(signupBody: RequestBody): NetworkResult<RegisterResponseBody>
 
-    suspend fun fetchPosts(): NetworkResult<PostsResponseBody>
-
     fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>>
 
     suspend fun makePost(postBody: MultipartBody): NetworkResult<MakePostResponseBody>
@@ -26,4 +24,6 @@ interface MainRepository {
     suspend fun createVendor(createVendorBody: MultipartBody): NetworkResult<CreateVendorResponse>
 
     suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel>
+
+    suspend fun getAllRemotePosts(): NetworkResult<PostsResponseBody>
 }

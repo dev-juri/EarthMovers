@@ -7,7 +7,6 @@ import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.local.dao.EarthMoversDao
 import com.earthmovers.www.data.mapper.toDatabaseModel
-import com.earthmovers.www.data.mapper.toDbModel
 import com.earthmovers.www.data.mapper.toDomainPost
 import com.earthmovers.www.data.mapper.toDomainUSer
 import com.earthmovers.www.data.remote.*
@@ -15,7 +14,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
@@ -63,25 +61,6 @@ class MainRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun fetchPosts(): NetworkResult<PostsResponseBody> = withContext(dispatcher) {
-        try {
-            val fetchResponse = remoteSource.fetchRemotePosts()
-
-            Timber.tag("POST").d("Endpoint called")
-            if (fetchResponse.isSuccessful) {
-
-                val data = (fetchResponse.body() as PostsResponseBody)
-                localSource.saveRecentPosts(*data.toDbModel())
-
-                NetworkResult.Success(data)
-            } else {
-                NetworkResult.Error("Something went wrong")
-            }
-        } catch (e: Exception) {
-            NetworkResult.Error("Something went wrong, please try again.")
-        }
-    }
-
     override fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>> =
         Transformations.map(localSource.fetchAllRecentPosts()) {
             it.toDomainPost()
@@ -126,6 +105,21 @@ class MainRepositoryImpl @Inject constructor(
                 if (response.isSuccessful && (response.body() as NetworkUserModel).name.isNotEmpty()) {
                     val data = (response.body() as NetworkUserModel)
 
+                    NetworkResult.Success(data)
+                } else {
+                    NetworkResult.Error("Something went wrong")
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
+        }
+
+    override suspend fun getAllRemotePosts(): NetworkResult<PostsResponseBody> =
+        withContext(dispatcher) {
+            try {
+                val response = remoteSource.getAllRemotePosts()
+                if (response.isSuccessful) {
+                    val data = response.body() as PostsResponseBody
                     NetworkResult.Success(data)
                 } else {
                     NetworkResult.Error("Something went wrong")

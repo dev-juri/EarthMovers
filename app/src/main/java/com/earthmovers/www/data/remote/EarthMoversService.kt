@@ -15,9 +15,6 @@ interface EarthMoversService {
     @POST("/login")
     suspend fun login(@Body loginBody: LoginBody): Response<LoginResponseBody>
 
-    @GET("/posts")
-    suspend fun fetchRemotePosts(): Response<PostsResponseBody>
-
     @POST("/post")
     suspend fun makePost(@Body postBody: MultipartBody): Response<MakePostResponseBody>
 
@@ -26,4 +23,7 @@ interface EarthMoversService {
 
     @POST("/create")
     suspend fun createVendor(@Body vendorBody: MultipartBody): Response<CreateVendorResponse>
+
+    @GET("/posts")
+    suspend fun getAllRemotePosts(): Response<PostsResponseBody>
 }

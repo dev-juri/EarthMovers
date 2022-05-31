@@ -15,15 +15,12 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class PostsViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
 
-
-    val posts = repository.fetchRecentPostsFromDb()
     val user = repository.fetchUserDetailsIfAny()
 
     private val _dataState = MutableLiveData<State?>()
@@ -34,29 +31,6 @@ class PostsViewModel @Inject constructor(private val repository: MainRepository)
 
     private val _imageURI = MutableLiveData<Uri>()
     private val imageURI get() = _imageURI
-
-    init {
-        fetchRemotePosts()
-    }
-
-    fun fetchRemotePosts() {
-        viewModelScope.launch {
-            _dataState.postValue(State.LOADING)
-            when (repository.fetchPosts()) {
-                is NetworkResult.Success -> {
-                    _dataState.postValue(State.SUCCESS)
-                    Timber.tag("POST").d("Successful")
-                }
-                is NetworkResult.Error -> {
-                    _dataState.postValue(State.ERROR)
-                    Timber.tag("POST").d("Error")
-                }
-                else -> {
-                    _dataState.postValue(State.LOADING)
-                }
-            }
-        }
-    }
 
     fun makePost(
         context: Context,
