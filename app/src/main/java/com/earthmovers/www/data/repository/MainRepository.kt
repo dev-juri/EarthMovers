@@ -22,4 +22,8 @@ interface MainRepository {
     fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>>
 
     suspend fun makePost(postBody: MultipartBody): NetworkResult<MakePostResponseBody>
+
+    suspend fun createVendor(createVendorBody: MultipartBody): NetworkResult<CreateVendorResponse>
+
+    suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel>
 }

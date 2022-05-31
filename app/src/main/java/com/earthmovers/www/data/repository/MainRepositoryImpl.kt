@@ -102,4 +102,36 @@ class MainRepositoryImpl @Inject constructor(
                 NetworkResult.Error("Something went wrong, please try again.")
             }
         }
+
+    override suspend fun createVendor(createVendorBody: MultipartBody): NetworkResult<CreateVendorResponse> =
+        withContext(dispatcher) {
+            try {
+                val response = remoteSource.createVendor(createVendorBody)
+                if (response.isSuccessful) {
+                    val data = (response.body() as CreateVendorResponse)
+
+                    NetworkResult.Success(data)
+                } else {
+                    NetworkResult.Error("Something went wrong")
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
+        }
+
+    override suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel> =
+        withContext(dispatcher) {
+            try {
+                val response = remoteSource.getUserWithId(getUserBody)
+                if (response.isSuccessful && (response.body() as NetworkUserModel).name.isNotEmpty()) {
+                    val data = (response.body() as NetworkUserModel)
+
+                    NetworkResult.Success(data)
+                } else {
+                    NetworkResult.Error("Something went wrong")
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
+        }
 }

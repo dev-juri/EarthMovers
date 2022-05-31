@@ -4,3 +4,7 @@ data class LoginBody(
     val userName: String,
     val password: String
 )
+
+data class GetUserBody(
+    val userID: String
+)

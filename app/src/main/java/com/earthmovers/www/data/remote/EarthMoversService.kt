@@ -20,4 +20,10 @@ interface EarthMoversService {
 
     @POST("/post")
     suspend fun makePost(@Body postBody: MultipartBody): Response<MakePostResponseBody>
+
+    @GET("/user")
+    suspend fun getUserWithId(@Body getUserBody: GetUserBody): Response<NetworkUserModel>
+
+    @POST("/create")
+    suspend fun createVendor(@Body vendorBody: MultipartBody): Response<CreateVendorResponse>
 }

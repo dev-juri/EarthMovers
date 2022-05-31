@@ -1,9 +1,5 @@
 package com.earthmovers.www.data.remote
 
-data class ErrorResponse(
-    val message: String
-)
-
 data class RegisterResponseBody(
     val message: String,
     val token: String,
@@ -56,4 +52,9 @@ data class MakePostResponseBody(
     val src: String,
     val phone: String,
     val post: PostDetails
+)
+
+data class CreateVendorResponse(
+    val message: String,
+    val response: NetworkUserModel
 )

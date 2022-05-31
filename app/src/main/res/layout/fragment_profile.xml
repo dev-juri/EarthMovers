@@ -47,7 +47,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/profile_picture"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/hauling_vehicle" />
+                    android:src="@drawable/ic_person" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
