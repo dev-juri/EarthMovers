@@ -6,10 +6,10 @@ data class RegisterResponseBody(
     val id: String,
     val phone: String,
     val email: String,
-    val user: NetworkUserModel
+    val user: UserNorm
 )
 
-data class NetworkUserModel(
+data class UserNorm(
     val _id: String,
     val name: String,
     val email: String,
@@ -19,12 +19,26 @@ data class NetworkUserModel(
     val updatedAt: String,
     val __v: Int
 )
+data class NetworkUserModel(
+    val response: UserResponse
+)
 
+data class UserResponse(
+    val notifications: List<Notifications>,
+    val _id: String,
+    val name: String,
+    val email: String,
+    val phone: String,
+    val password: String,
+    val createdAt: String,
+    val updatedAt: String,
+    val __v: Int
+)
 data class LoginResponseBody(
     val message: String,
     val token: String,
     val id: String,
-    val response: NetworkUserModel
+    val response: UserNorm
 )
 
 data class PostsResponseBody(

@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -74,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Samuel L Perry"
+            tools:text="Samuel L Perry"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -89,7 +90,7 @@
             android:layout_margin="16dp"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:text="+1 532 2124"
+            tools:text="+1 532 2124"
             android:textColor="@color/green"
             android:textSize="20sp"
             android:textStyle="bold"

@@ -8,6 +8,8 @@ import com.earthmovers.www.data.NetworkResult
 import com.earthmovers.www.data.State
 import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.mapper.toDbModel
+import com.earthmovers.www.data.remote.GetUserBody
+import com.earthmovers.www.data.remote.UserResponse
 import com.earthmovers.www.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,8 +27,29 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository) 
     private val _dataState = MutableLiveData<State?>()
     val dataState get() = _dataState
 
+    private val _onlineUserInfo = MutableLiveData<UserResponse>()
+    val onlineUserInfo get() = _onlineUserInfo
+
     init {
         getRemotePosts()
+    }
+
+    fun getUserWithId(getUserBody: GetUserBody) {
+        viewModelScope.launch {
+            _dataState.value = State.LOADING
+            when (val result = repository.getUserWithId(getUserBody)) {
+                is NetworkResult.Success -> {
+                    _dataState.postValue(State.SUCCESS)
+                    _onlineUserInfo.value = result.data.response
+                }
+                is NetworkResult.Error -> {
+                    _dataState.postValue(State.ERROR)
+                }
+                else -> {
+                    _dataState.postValue(State.LOADING)
+                }
+            }
+        }
     }
 
     fun getRemotePosts() {
