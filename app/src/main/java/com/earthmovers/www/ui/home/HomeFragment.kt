@@ -32,7 +32,6 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home), PostClic
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getRemotePosts()
         observeDataState()
 
         imagesForSlider = listOf(

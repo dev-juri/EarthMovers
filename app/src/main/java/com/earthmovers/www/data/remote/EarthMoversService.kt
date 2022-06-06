@@ -29,4 +29,7 @@ interface EarthMoversService {
 
     @POST("/get-notification")
     suspend fun getAllNotificationsAsync(@Body notificationBody: NotificationBody): Response<NotificationResponse>
+
+    @POST("/accept-offer")
+    suspend fun acceptOffer(@Body acceptOfferBody: AcceptOfferBody)
 }

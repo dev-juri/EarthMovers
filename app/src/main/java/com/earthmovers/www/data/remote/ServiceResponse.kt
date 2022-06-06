@@ -32,7 +32,11 @@ data class UserResponse(
     val password: String,
     val createdAt: String,
     val updatedAt: String,
-    val __v: Int
+    val __v: Int,
+    val description: String? = null,
+    val isVendor: Boolean? = false,
+    val truck_plate_number: String? = null,
+    val truck_src: String? = null
 )
 data class LoginResponseBody(
     val message: String,
@@ -82,12 +86,28 @@ data class MakePostDetails(
 
 data class CreateVendorResponse(
     val message: String,
-    val response: NetworkUserModel
+    val response: CVUserResponse
 )
 
 data class NotificationResponse(
     val status: String,
     val response: List<Notifications>
+)
+
+data class CVUserResponse(
+    val notifications: List<Notifications>,
+    val _id: String,
+    val name: String,
+    val email: String,
+    val phone: String,
+    val password: String,
+    val createdAt: String,
+    val updatedAt: String,
+    val __v: Int,
+    val description: String,
+    val isVendor: Boolean,
+    val truck_plate_number: String,
+    val truck_src: String
 )
 
 data class Notifications(

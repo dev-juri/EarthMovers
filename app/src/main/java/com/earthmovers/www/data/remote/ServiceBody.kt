@@ -12,3 +12,10 @@ data class GetUserBody(
 data class NotificationBody(
     val userID: String
 )
+
+data class AcceptOfferBody(
+    val accepterID: String,
+    val accepterName: String,
+    val accepterImage: String,
+    val postID: String
+)
