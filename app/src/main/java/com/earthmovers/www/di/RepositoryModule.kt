@@ -1,8 +1,8 @@
 package com.earthmovers.www.di
 
 
-import com.earthmovers.www.data.remote.EarthMoversService
 import com.earthmovers.www.data.local.dao.EarthMoversDao
+import com.earthmovers.www.data.remote.EarthMoversService
 import com.earthmovers.www.data.repository.MainRepositoryImpl
 import dagger.Module
 import dagger.Provides

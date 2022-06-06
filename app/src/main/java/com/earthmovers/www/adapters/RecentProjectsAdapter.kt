@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.databinding.ProjectListItemBinding
 
-class RecentProjectsAdapter :
+class RecentProjectsAdapter(
+    private val onPostClickListener: PostClickListener
+) :
     ListAdapter<RecentProject, RecentProjectsAdapter.RecentProjectsViewHolder>(
         RecentProjectsDiffCallback
     ) {
@@ -20,9 +22,12 @@ class RecentProjectsAdapter :
     override fun onBindViewHolder(holder: RecentProjectsViewHolder, position: Int) {
         val recentProject = getItem(position)
         holder.bind(recentProject)
+        holder.binding.viewDetails.setOnClickListener {
+            onPostClickListener.onPostClick(recentProject)
+        }
     }
 
-    class RecentProjectsViewHolder constructor(private val binding: ProjectListItemBinding) :
+    class RecentProjectsViewHolder constructor(val binding: ProjectListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recentProject: RecentProject) {
             binding.projectDetails.text = recentProject.projectHighlight

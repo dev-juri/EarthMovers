@@ -18,12 +18,15 @@ interface EarthMoversService {
     @POST("/post")
     suspend fun makePost(@Body postBody: MultipartBody): Response<MakePostResponseBody>
 
-    @GET("/user")
-    suspend fun getUserWithId(@Body getUserBody: GetUserBody): Response<NetworkUserModel>
+    @POST("/user")
+    suspend fun getUserWithIdAsync(@Body getUserBody: GetUserBody): Response<NetworkUserModel>
 
     @POST("/create")
     suspend fun createVendor(@Body vendorBody: MultipartBody): Response<CreateVendorResponse>
 
     @GET("/posts")
-    suspend fun getAllRemotePosts(): Response<PostsResponseBody>
+    suspend fun getAllRemotePostsAsync(): Response<PostsResponseBody>
+
+    @POST("/get-notification")
+    suspend fun getAllNotificationsAsync(@Body notificationBody: NotificationBody): Response<NotificationResponse>
 }

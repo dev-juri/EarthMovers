@@ -3,12 +3,12 @@ package com.earthmovers.www.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.earthmovers.www.data.NetworkResult
+import com.earthmovers.www.data.domain.DomainNotification
 import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.local.dao.EarthMoversDao
-import com.earthmovers.www.data.mapper.toDatabaseModel
-import com.earthmovers.www.data.mapper.toDomainPost
-import com.earthmovers.www.data.mapper.toDomainUSer
+import com.earthmovers.www.data.local.entity.DbRecentPost
+import com.earthmovers.www.data.mapper.*
 import com.earthmovers.www.data.remote.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -98,34 +98,54 @@ class MainRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel> =
-        withContext(dispatcher) {
-            return@withContext try {
-                val response = remoteSource.getUserWithId(getUserBody)
-                if (response.isSuccessful && (response.body() as NetworkUserModel).name.isNotEmpty()) {
-                    val data = (response.body() as NetworkUserModel)
-
-                    NetworkResult.Success(data)
-                } else {
-                    NetworkResult.Error("Something went wrong")
-                }
-            } catch (e: Exception) {
-                NetworkResult.Error("Something went wrong, please try again.")
-            }
+    override suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel> {
+        val response = remoteSource.getUserWithIdAsync(getUserBody)
+        return try {
+            val result = response.body() as NetworkUserModel
+            NetworkResult.Success(result)
+        } catch (e: Exception) {
+            NetworkResult.Error("Something went wrong, please try again.")
         }
+    }
 
     override suspend fun getAllRemotePosts(): NetworkResult<PostsResponseBody> =
         withContext(dispatcher) {
+            val response = remoteSource.getAllRemotePostsAsync()
             return@withContext try {
-                val response = remoteSource.getAllRemotePosts()
-                if (response.isSuccessful) {
-                    val data = response.body() as PostsResponseBody
-                    NetworkResult.Success(data)
-                } else {
-                    NetworkResult.Error("Something went wrong")
-                }
+                val result = response.body() as PostsResponseBody
+
+                NetworkResult.Success(result)
             } catch (e: Exception) {
                 NetworkResult.Error("Something went wrong, please try again.")
             }
         }
+
+    override suspend fun savePosts(dbPosts: Array<DbRecentPost>) {
+        localSource.saveRecentPosts(*dbPosts)
+    }
+
+    override suspend fun getAllNotifications(notificationBody: NotificationBody): NetworkResult<NotificationResponse> =
+        withContext(dispatcher) {
+            val response = remoteSource.getAllNotificationsAsync(notificationBody)
+            return@withContext try {
+                val result = response.body() as NotificationResponse
+                if (result.response.isNotEmpty()) {
+                    localSource.saveNotifications(*result.toDbModel())
+                }
+                NetworkResult.Success(result)
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
+        }
+
+    override fun fetchNotifications(): LiveData<List<DomainNotification>> =
+        Transformations.map(localSource.getAllNotifications()) {
+            it.toDomainNotification()
+        }
+
+    override fun getDbPostWithId(id: String): LiveData<RecentProject> =
+        Transformations.map(localSource.getPostDetails(id)) {
+            it.toDomainModel()
+        }
+
 }

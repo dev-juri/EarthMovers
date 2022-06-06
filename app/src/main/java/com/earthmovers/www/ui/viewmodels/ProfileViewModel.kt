@@ -49,10 +49,10 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
             .addFormDataPart("truck_plate_number", truckNum)
             .addFormDataPart("phone", phone)
             .addFormDataPart(
-                "file", truckNum,
+                "file", userDetails.id,
                 File(imagePath).asRequestBody("application/octet-stream".toMediaTypeOrNull())
             )
-            .addFormDataPart("fileName", truckNum)
+            .addFormDataPart("filename", userDetails.id)
             .build()
 
         viewModelScope.launch {

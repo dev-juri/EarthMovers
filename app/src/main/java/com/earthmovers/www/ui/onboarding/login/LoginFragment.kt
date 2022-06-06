@@ -21,7 +21,7 @@ import com.earthmovers.www.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment: BaseFragment(R.layout.fragment_login) {
+class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
     var areFieldsValidated = false
@@ -54,9 +54,9 @@ class LoginFragment: BaseFragment(R.layout.fragment_login) {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                if(areFieldsValidated){
+                if (areFieldsValidated) {
                     val loginBody = LoginBody(email, password)
-                    if(isOnline(requireContext())){
+                    if (isOnline(requireContext())) {
                         viewModel.loginUser(loginBody)
                     } else {
                         Toast.makeText(

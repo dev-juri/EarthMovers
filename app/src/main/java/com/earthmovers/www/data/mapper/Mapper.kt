@@ -1,10 +1,13 @@
 package com.earthmovers.www.data.mapper
 
+import com.earthmovers.www.data.domain.DomainNotification
 import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
+import com.earthmovers.www.data.local.entity.DbNotification
 import com.earthmovers.www.data.local.entity.DbRecentPost
 import com.earthmovers.www.data.local.entity.DbUser
 import com.earthmovers.www.data.remote.LoginResponseBody
+import com.earthmovers.www.data.remote.NotificationResponse
 import com.earthmovers.www.data.remote.PostsResponseBody
 import com.earthmovers.www.data.remote.RegisterResponseBody
 
@@ -49,7 +52,6 @@ fun PostsResponseBody.toDbModel(): Array<DbRecentPost> {
         DbRecentPost(
             id = it._id,
             name = it.name,
-            src = it.src,
             phone = it.phone,
             projectHighlight = it.details,
             location = it.location,
@@ -62,11 +64,10 @@ fun PostsResponseBody.toDbModel(): Array<DbRecentPost> {
 }
 
 fun List<DbRecentPost>.toDomainPost(): List<RecentProject> {
-    return map{
+    return map {
         RecentProject(
             _id = it.id,
             name = it.name,
-            src = it.src,
             phone = it.phone,
             projectHighlight = it.projectHighlight,
             location = it.location,
@@ -77,4 +78,43 @@ fun List<DbRecentPost>.toDomainPost(): List<RecentProject> {
         )
     }
 }
+
+fun DbRecentPost.toDomainModel(): RecentProject {
+    return RecentProject(
+        _id = this.id,
+        name = this.name,
+        phone = this.phone,
+        projectHighlight = this.projectHighlight,
+        location = this.location,
+        owner = this.owner,
+        image = this.image,
+        createdAt = this.createdAt,
+        updatedAt = this.updatedAt
+    )
+}
+
+fun List<DbNotification>.toDomainNotification(): List<DomainNotification> {
+    return map {
+        DomainNotification(
+            name = it.name,
+            image = it.image,
+            ID = it.ID,
+            time = it.time,
+            details = it.details
+        )
+    }
+}
+
+fun NotificationResponse.toDbModel(): Array<DbNotification> {
+    return response.map {
+        DbNotification(
+            name = it.name,
+            image = it.image,
+            ID = it.ID,
+            time = it.time,
+            details = it.details
+        )
+    }.toTypedArray()
+}
+
 

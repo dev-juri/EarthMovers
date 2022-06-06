@@ -2,8 +2,10 @@ package com.earthmovers.www.data.repository
 
 import androidx.lifecycle.LiveData
 import com.earthmovers.www.data.NetworkResult
+import com.earthmovers.www.data.domain.DomainNotification
 import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
+import com.earthmovers.www.data.local.entity.DbRecentPost
 import com.earthmovers.www.data.remote.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -26,4 +28,12 @@ interface MainRepository {
     suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel>
 
     suspend fun getAllRemotePosts(): NetworkResult<PostsResponseBody>
+
+    suspend fun savePosts(dbPosts: Array<DbRecentPost>)
+
+    suspend fun getAllNotifications(notificationBody: NotificationBody): NetworkResult<NotificationResponse>
+
+    fun fetchNotifications(): LiveData<List<DomainNotification>>
+
+    fun getDbPostWithId(id: String): LiveData<RecentProject>
 }

@@ -3,7 +3,6 @@ package com.earthmovers.www.data.domain
 data class RecentProject(
     val _id: String,
     val name: String,
-    val src: String,
     val phone: String,
     val projectHighlight: String,
     val location: String,

@@ -12,18 +12,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:foreground="@drawable/splash_image_overlay"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:foreground="@drawable/splash_image_overlay">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/hauling_vehicle"
                 android:scaleType="centerCrop"
+                android:src="@drawable/hauling_vehicle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -31,16 +31,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:textStyle="bold"
-            android:textColor="@color/white"
+            android:id="@+id/img_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="28sp"
-            android:id="@+id/img_details"
-            android:layout_marginTop="24dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:text="@string/earn_xtra"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

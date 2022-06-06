@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/back_arrow_button"
@@ -61,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="Profile Picture"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/hauling_vehicle" />
+                    android:src="@drawable/ic_person" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -205,16 +206,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/number_card" />
 
-            <ImageView
-                android:id="@+id/project_image"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/image_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/hauling_vehicle"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_placeholder" />
+                app:layout_constraintTop_toBottomOf="@id/image_placeholder"
+                app:strokeColor="@color/grayer">
+
+                <ImageView
+                    android:id="@+id/project_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/hauling_vehicle" />
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/check_map"
@@ -226,18 +235,18 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/project_image" />
+                app:layout_constraintTop_toBottomOf="@+id/image_card" />
 
             <com.google.android.material.button.MaterialButton
                 style="@style/ButtonStyle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/check_map"
-                android:layout_margin="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:text="@string/accept"
-                app:cornerRadius="30dp" />
+                app:cornerRadius="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_map" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

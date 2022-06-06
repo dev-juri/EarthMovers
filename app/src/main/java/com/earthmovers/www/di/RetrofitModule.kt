@@ -1,8 +1,8 @@
 package com.earthmovers.www.di
 
+import com.earthmovers.www.BuildConfig
 import com.earthmovers.www.data.remote.EarthMoversService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.earthmovers.www.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

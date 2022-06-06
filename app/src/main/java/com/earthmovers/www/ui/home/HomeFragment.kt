@@ -2,12 +2,15 @@ package com.earthmovers.www.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.earthmovers.www.R
 import com.earthmovers.www.adapters.ImageDetails
 import com.earthmovers.www.adapters.ImageSlideAdapter
+import com.earthmovers.www.adapters.PostClickListener
 import com.earthmovers.www.adapters.RecentProjectsAdapter
 import com.earthmovers.www.data.State
+import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.databinding.FragmentHomeBinding
 import com.earthmovers.www.utils.BottomNavTopLevelFragment
 import com.earthmovers.www.utils.setGone
@@ -16,10 +19,10 @@ import com.earthmovers.www.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
+class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home), PostClickListener {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by activityViewModels<HomeViewModel>()
 
     private lateinit var viewPagerAdapter: ImageSlideAdapter
     private lateinit var imagesForSlider: List<ImageDetails>
@@ -29,8 +32,9 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeDataState()
         viewModel.getRemotePosts()
+        observeDataState()
+
         imagesForSlider = listOf(
             ImageDetails(
                 getString(R.string.earn_xtra),
@@ -46,7 +50,7 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
         binding.viewpager.adapter = viewPagerAdapter
         binding.indicator.setViewPager(binding.viewpager)
 
-        recentProjectRecyclerAdapter = RecentProjectsAdapter()
+        recentProjectRecyclerAdapter = RecentProjectsAdapter(this)
         binding.recentProjectRecycler.adapter = recentProjectRecyclerAdapter
 
         viewModel.user.observe(viewLifecycleOwner) {
@@ -87,6 +91,11 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home) {
                 }
             }
         }
+    }
+
+    override fun onPostClick(project: RecentProject) {
+        viewModel.selectPost(project)
+        findNavController().navigate(R.id.action_homeFragment_to_projectDetailsFragment)
     }
 
 }

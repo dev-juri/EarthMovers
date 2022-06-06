@@ -18,7 +18,6 @@ data class DbRecentPost(
     @PrimaryKey(autoGenerate = false)
     val id: String,
     val name: String,
-    val src: String,
     val phone: String,
     val projectHighlight: String,
     val location: String,
@@ -26,4 +25,14 @@ data class DbRecentPost(
     val image: String,
     val createdAt: String,
     val updatedAt: String
+)
+
+@Entity(tableName = "Notifications")
+data class DbNotification(
+    val name: String,
+    val image: String,
+    @PrimaryKey(autoGenerate = false)
+    val ID: String,
+    val time: String,
+    val details: String
 )
