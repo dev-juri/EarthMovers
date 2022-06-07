@@ -121,6 +121,7 @@ class MainRepositoryImpl @Inject constructor(
         }
 
     override suspend fun savePosts(dbPosts: Array<DbRecentPost>) {
+        localSource.deleteAllPosts()
         localSource.saveRecentPosts(*dbPosts)
     }
 

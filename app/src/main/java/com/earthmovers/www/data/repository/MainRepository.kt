@@ -36,4 +36,6 @@ interface MainRepository {
     fun fetchNotifications(): LiveData<List<DomainNotification>>
 
     fun getDbPostWithId(id: String): LiveData<RecentProject>
+
+    //suspend fun updateProfileDetails()
 }

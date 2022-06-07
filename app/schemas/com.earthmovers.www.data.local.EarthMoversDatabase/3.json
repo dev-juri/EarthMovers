@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "93745dde37955dc0c5e2ff3068e8862a",
+    "identityHash": "a892f3922432a9495fbe7ef6596d12a1",
     "entities": [
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`token` TEXT NOT NULL, `id` TEXT NOT NULL, `phone` TEXT NOT NULL, `email` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`token` TEXT NOT NULL, `id` TEXT NOT NULL, `phone` TEXT NOT NULL, `email` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `isVendor` INTEGER, `truck_plate_number` TEXT, `truck_src` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "token",
@@ -37,6 +37,30 @@
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isVendor",
+            "columnName": "isVendor",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "truck_plate_number",
+            "columnName": "truck_plate_number",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "truck_src",
+            "columnName": "truck_src",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -164,7 +188,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '93745dde37955dc0c5e2ff3068e8862a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a892f3922432a9495fbe7ef6596d12a1')"
     ]
   }
 }

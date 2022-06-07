@@ -2,10 +2,7 @@ package com.earthmovers.www.data.local.dao
 
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.earthmovers.www.data.local.entity.DbNotification
 import com.earthmovers.www.data.local.entity.DbRecentPost
 import com.earthmovers.www.data.local.entity.DbUser
@@ -33,4 +30,7 @@ interface EarthMoversDao {
 
     @Query("SELECT * from RecentPosts WHERE id=:id")
     fun getPostDetails(id: String): LiveData<DbRecentPost>
+
+    @Query("DELETE from RecentPosts")
+    suspend fun deleteAllPosts()
 }

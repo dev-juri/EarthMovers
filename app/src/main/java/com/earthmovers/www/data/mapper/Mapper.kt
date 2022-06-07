@@ -18,7 +18,11 @@ fun RegisterResponseBody.toDatabaseModel(): DbUser {
             id = it.user._id,
             name = it.user.name,
             email = it.user.email,
-            phone = it.user.phone
+            phone = it.user.phone,
+            description = it.user.description,
+            isVendor = it.user.isVendor,
+            truck_plate_number = it.user.truck_plate_number,
+            truck_src = it.user.truck_src
         )
     }
 }
@@ -30,7 +34,11 @@ fun DbUser?.toDomainUSer(): User? {
             id = it.id,
             name = it.name,
             phone = it.phone,
-            email = it.email
+            email = it.email,
+            description = it.description,
+            isVendor = it.isVendor,
+            truck_plate_number = it.truck_plate_number,
+            truck_src = it.truck_src
         )
     }
 }
@@ -42,7 +50,11 @@ fun LoginResponseBody.toDatabaseModel(): DbUser {
             id = it.id,
             name = it.response.name,
             phone = it.response.phone,
-            email = it.response.email
+            email = it.response.email,
+            description = it.response.description,
+            isVendor = it.response.isVendor,
+            truck_plate_number = it.response.truck_plate_number,
+            truck_src = it.response.truck_src
         )
     }
 }

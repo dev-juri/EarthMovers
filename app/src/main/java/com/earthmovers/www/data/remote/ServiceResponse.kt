@@ -17,7 +17,11 @@ data class UserNorm(
     val password: String,
     val createdAt: String,
     val updatedAt: String,
-    val __v: Int
+    val __v: Int,
+    val description: String? = null,
+    val isVendor: Boolean? = false,
+    val truck_plate_number: String? = null,
+    val truck_src: String? = null
 )
 data class NetworkUserModel(
     val response: UserResponse

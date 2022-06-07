@@ -32,4 +32,7 @@ interface EarthMoversService {
 
     @POST("/accept-offer")
     suspend fun acceptOffer(@Body acceptOfferBody: AcceptOfferBody)
+
+    @POST("/update")
+    suspend fun updateProfile(@Body updatedProfileBody: MultipartBody)
 }
