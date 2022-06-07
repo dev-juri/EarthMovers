@@ -8,6 +8,7 @@ import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.local.dao.EarthMoversDao
 import com.earthmovers.www.data.local.entity.DbRecentPost
+import com.earthmovers.www.data.local.entity.DbUser
 import com.earthmovers.www.data.mapper.*
 import com.earthmovers.www.data.remote.*
 import kotlinx.coroutines.CoroutineDispatcher
@@ -33,8 +34,7 @@ class MainRepositoryImpl @Inject constructor(
                 val response = remoteSource.login(loginBody)
                 if (response.isSuccessful && (response.body() as LoginResponseBody).message == "Login Succesful") {
                     val data = response.body() as LoginResponseBody
-                    localSource.saveLoggedUserInfo(data.toDatabaseModel())
-
+                    saveUserDetails(data.toDatabaseModel())
                     NetworkResult.Success(data)
                 } else {
                     NetworkResult.Error("Incorrect username or password")
@@ -50,8 +50,7 @@ class MainRepositoryImpl @Inject constructor(
                 val response = remoteSource.register(signupBody)
                 if (response.isSuccessful && (response.body() as RegisterResponseBody).message == "Login Successful") {
                     val data = response.body() as RegisterResponseBody
-                    localSource.saveLoggedUserInfo(data.toDatabaseModel())
-
+                    saveUserDetails(data.toDatabaseModel())
                     NetworkResult.Success(data)
                 } else {
                     NetworkResult.Error("User exists, proceed to login")
@@ -158,6 +157,10 @@ class MainRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             NetworkResult.Error("Something went wrong, please try again.")
         }
+    }
+
+    override suspend fun saveUserDetails(dbUser: DbUser) {
+        localSource.saveLoggedUserInfo(dbUser)
     }
 
 }

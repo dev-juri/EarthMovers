@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "a892f3922432a9495fbe7ef6596d12a1",
+    "identityHash": "31d1a9894a749643b6760172d991ec08",
     "entities": [
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`token` TEXT NOT NULL, `id` TEXT NOT NULL, `phone` TEXT NOT NULL, `email` TEXT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `isVendor` INTEGER, `truck_plate_number` TEXT, `truck_src` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`token` TEXT NOT NULL, `id` TEXT NOT NULL, `phone` TEXT NOT NULL, `email` TEXT NOT NULL, `name` TEXT NOT NULL, `src` TEXT, `description` TEXT, `isVendor` INTEGER, `truck_plate_number` TEXT, `truck_src` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "token",
@@ -37,6 +37,12 @@
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "src",
+            "columnName": "src",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "description",
@@ -188,7 +194,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a892f3922432a9495fbe7ef6596d12a1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '31d1a9894a749643b6760172d991ec08')"
     ]
   }
 }

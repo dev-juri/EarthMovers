@@ -8,12 +8,15 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.earthmovers.www.R
 import com.earthmovers.www.data.State
 import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.databinding.FragmentProfileBinding
 import com.earthmovers.www.ui.viewmodels.ProfileViewModel
 import com.earthmovers.www.utils.BottomNavTopLevelFragment
+import com.earthmovers.www.utils.setGone
+import com.earthmovers.www.utils.setVisible
 import com.earthmovers.www.utils.viewBinding
 
 class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
@@ -34,8 +37,22 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
                 user = it
                 binding.fullName.text = it.name
                 binding.phoneNumber.text = it.phone
+                if (it.src != null) {
+                    Glide.with(this)
+                        .load(it.src)
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_image_placeholder)
+                        .into(binding.profilePicture)
+                }
+                if (it.isVendor == true) {
+                    binding.switchMode.setGone()
+                } else {
+                    binding.switchMode.setVisible()
+                }
             }
         }
+        viewModel.getUserWithId(user)
+
         viewModel.imageURI.observe(viewLifecycleOwner) {
             if (it != null) {
                 viewModel.updateUser(requireContext(), user)

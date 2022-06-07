@@ -11,6 +11,7 @@ data class DbUser(
     val phone: String,
     val email: String,
     val name: String,
+    val src: String? = null,
     val description: String? = null,
     val isVendor: Boolean? = false,
     val truck_plate_number: String? = null,

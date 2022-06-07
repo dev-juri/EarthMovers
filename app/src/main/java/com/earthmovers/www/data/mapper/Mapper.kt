@@ -6,10 +6,7 @@ import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.local.entity.DbNotification
 import com.earthmovers.www.data.local.entity.DbRecentPost
 import com.earthmovers.www.data.local.entity.DbUser
-import com.earthmovers.www.data.remote.LoginResponseBody
-import com.earthmovers.www.data.remote.NotificationResponse
-import com.earthmovers.www.data.remote.PostsResponseBody
-import com.earthmovers.www.data.remote.RegisterResponseBody
+import com.earthmovers.www.data.remote.*
 
 fun RegisterResponseBody.toDatabaseModel(): DbUser {
     return this.let {
@@ -19,6 +16,7 @@ fun RegisterResponseBody.toDatabaseModel(): DbUser {
             name = it.user.name,
             email = it.user.email,
             phone = it.user.phone,
+            src = it.user.src,
             description = it.user.description,
             isVendor = it.user.isVendor,
             truck_plate_number = it.user.truck_plate_number,
@@ -35,6 +33,7 @@ fun DbUser?.toDomainUSer(): User? {
             name = it.name,
             phone = it.phone,
             email = it.email,
+            src = it.src,
             description = it.description,
             isVendor = it.isVendor,
             truck_plate_number = it.truck_plate_number,
@@ -51,6 +50,7 @@ fun LoginResponseBody.toDatabaseModel(): DbUser {
             name = it.response.name,
             phone = it.response.phone,
             email = it.response.email,
+            src = it.response.src,
             description = it.response.description,
             isVendor = it.response.isVendor,
             truck_plate_number = it.response.truck_plate_number,

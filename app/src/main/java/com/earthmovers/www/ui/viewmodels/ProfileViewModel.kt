@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.earthmovers.www.data.NetworkResult
 import com.earthmovers.www.data.State
 import com.earthmovers.www.data.domain.User
+import com.earthmovers.www.data.local.entity.DbUser
+import com.earthmovers.www.data.remote.GetUserBody
 import com.earthmovers.www.data.repository.MainRepository
 import com.earthmovers.www.utils.RealPathUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +32,36 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
 
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage get() = _errorMessage
+
+    fun getUserWithId(user: User) {
+        viewModelScope.launch {
+            _dataState.value = State.LOADING
+            when (val result = repository.getUserWithId(GetUserBody(user.id))) {
+                is NetworkResult.Success -> {
+                    val dbUser = DbUser(
+                        token = user.token,
+                        id = user.id,
+                        phone = result.data.response.phone,
+                        email = user.email,
+                        name = result.data.response.name,
+                        src = result.data.response.src,
+                        description = result.data.response.description,
+                        isVendor = result.data.response.isVendor ?: false,
+                        truck_plate_number = result.data.response.truck_plate_number,
+                        truck_src = result.data.response.truck_src
+                    )
+                    repository.saveUserDetails(dbUser)
+                    _dataState.postValue(State.SUCCESS)
+                }
+                is NetworkResult.Error -> {
+                    _dataState.postValue(State.ERROR)
+                }
+                else -> {
+                    _dataState.postValue(State.LOADING)
+                }
+            }
+        }
+    }
 
     fun createVendor(
         context: Context, desc: String, phone: String, truckNum: String,

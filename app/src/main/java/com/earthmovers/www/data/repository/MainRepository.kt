@@ -6,6 +6,7 @@ import com.earthmovers.www.data.domain.DomainNotification
 import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.local.entity.DbRecentPost
+import com.earthmovers.www.data.local.entity.DbUser
 import com.earthmovers.www.data.remote.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -38,4 +39,6 @@ interface MainRepository {
     fun getDbPostWithId(id: String): LiveData<RecentProject>
 
     suspend fun updateProfileDetails(updateProfileBody: MultipartBody): NetworkResult<UpdateResponse>
+
+    suspend fun saveUserDetails(dbUser: DbUser)
 }
