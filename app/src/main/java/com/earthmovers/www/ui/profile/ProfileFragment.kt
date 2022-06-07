@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.earthmovers.www.R
@@ -14,10 +15,7 @@ import com.earthmovers.www.data.State
 import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.databinding.FragmentProfileBinding
 import com.earthmovers.www.ui.viewmodels.ProfileViewModel
-import com.earthmovers.www.utils.BottomNavTopLevelFragment
-import com.earthmovers.www.utils.setGone
-import com.earthmovers.www.utils.setVisible
-import com.earthmovers.www.utils.viewBinding
+import com.earthmovers.www.utils.*
 
 class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
 
@@ -62,10 +60,9 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
             }
         }
 
-        viewModel.profileLoaded.observe(viewLifecycleOwner) {
+        viewModel.profileLoaded.observeOnce(viewLifecycleOwner) {
             if (it != null) {
                 viewModel.getUserWithId(user)
-                viewModel.clearProfileLoadedStatus()
             }
         }
 

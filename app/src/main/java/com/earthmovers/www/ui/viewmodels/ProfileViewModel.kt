@@ -170,6 +170,6 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
         _profileLoaded.value = true
     }
     fun clearProfileLoadedStatus() {
-        _profileLoaded.value = null
+        _profileLoaded.postValue(null)
     }
 }
