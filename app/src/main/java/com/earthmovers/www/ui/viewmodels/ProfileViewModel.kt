@@ -27,6 +27,9 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
     private val _imageURI = MutableLiveData<Uri?>()
     val imageURI get() = _imageURI
 
+    private val _profileLoaded = MutableLiveData<Boolean?>()
+    val profileLoaded get() = _profileLoaded
+
     private val _dataState = MutableLiveData<State?>()
     val dataState get() = _dataState
 
@@ -161,5 +164,12 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
 
     private fun clearErrorMessage() {
         _errorMessage.value = null
+    }
+
+    fun profileLoaded(){
+        _profileLoaded.value = true
+    }
+    fun clearProfileLoadedStatus() {
+        _profileLoaded.value = null
     }
 }

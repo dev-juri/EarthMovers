@@ -50,4 +50,7 @@
     <string name="submit">Submit</string>
     <string name="no_post_yet">No post yet.</string>
     <string name="selected_image_preview">Selected Image Preview</string>
+    <string name="desc">Description</string>
+    <string name="truck_num">Truck Plate Number</string>
+    <string name="truck_image">Truck Image</string>
 </resources>

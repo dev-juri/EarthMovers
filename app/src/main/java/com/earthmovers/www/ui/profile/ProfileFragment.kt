@@ -35,23 +35,39 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
         viewModel.user.observe(viewLifecycleOwner) {
             if (it != null) {
                 user = it
+                viewModel.profileLoaded()
                 binding.fullName.text = it.name
                 binding.phoneNumber.text = it.phone
                 if (it.src != null) {
                     Glide.with(this)
                         .load(it.src)
                         .centerCrop()
-                        .placeholder(R.drawable.ic_image_placeholder)
+                        .placeholder(R.drawable.ic_person)
                         .into(binding.profilePicture)
                 }
                 if (it.isVendor == true) {
-                    binding.switchMode.setGone()
+                    binding.description.text = it.description
+                    binding.truckNum.text = it.truck_plate_number
+                    Glide.with(this)
+                        .load(it.truck_src)
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_image_placeholder)
+                        .into(binding.truckImage)
+                    binding.vendorProfile.setVisible()
+                    binding.normalProfile.setGone()
                 } else {
-                    binding.switchMode.setVisible()
+                    binding.vendorProfile.setGone()
+                    binding.normalProfile.setVisible()
                 }
             }
         }
-        viewModel.getUserWithId(user)
+
+        viewModel.profileLoaded.observe(viewLifecycleOwner) {
+            if (it != null) {
+                viewModel.getUserWithId(user)
+                viewModel.clearProfileLoadedStatus()
+            }
+        }
 
         viewModel.imageURI.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -60,14 +76,23 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
         }
 
         viewModel.dataState.observe(viewLifecycleOwner) {
-            if (it == State.ERROR) {
-                Toast.makeText(
-                    requireContext(),
-                    "Couldn't upload image, Please try again",
-                    Toast.LENGTH_SHORT
-                ).show()
-                viewModel.clearImageData()
-                binding.profilePicture.setImageResource(R.drawable.ic_person)
+            when (it) {
+                State.SUCCESS -> {
+                    viewModel.resetState()
+                }
+                State.ERROR -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Couldn't upload image, Please try again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    viewModel.clearImageData()
+                    viewModel.resetState()
+                    binding.profilePicture.setImageResource(R.drawable.ic_person)
+                }
+                else -> {
+                    binding.profilePicture.setImageResource(R.drawable.ic_person)
+                }
             }
         }
 

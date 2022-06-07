@@ -27,6 +27,7 @@ class ContractorModeFormFragment : BaseFragment(R.layout.fragment_contractor_mod
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.resetState()
         observeDataState()
         var noFieldBlank = false
 
