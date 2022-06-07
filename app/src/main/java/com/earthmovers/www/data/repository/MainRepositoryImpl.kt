@@ -149,4 +149,15 @@ class MainRepositoryImpl @Inject constructor(
             it.toDomainModel()
         }
 
+    override suspend fun updateProfileDetails(updateProfileBody: MultipartBody): NetworkResult<UpdateResponse> = withContext(dispatcher) {
+        val response = remoteSource.updateProfile(updateProfileBody)
+        return@withContext try {
+            val result = response.body() as UpdateResponse
+
+            NetworkResult.Success(result)
+        } catch (e: Exception) {
+            NetworkResult.Error("Something went wrong, please try again.")
+        }
+    }
+
 }

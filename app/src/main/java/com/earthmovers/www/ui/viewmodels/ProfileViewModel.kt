@@ -23,7 +23,7 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
 
     val user = repository.fetchUserDetailsIfAny()
     private val _imageURI = MutableLiveData<Uri?>()
-    private val imageURI get() = _imageURI
+    val imageURI get() = _imageURI
 
     private val _dataState = MutableLiveData<State?>()
     val dataState get() = _dataState
@@ -76,6 +76,45 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
         }
     }
 
+    fun updateUser(context: Context, user: User) {
+        val imageUri = imageURI.value
+        val imagePath = RealPathUtil.returnImagePath(
+            context,
+            imageUri!!,
+            user.id
+        )!!
+        val updateUserBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("name", user.name)
+            .addFormDataPart("email", user.email)
+            .addFormDataPart("phone", user.phone)
+            .addFormDataPart("src", "")
+            .addFormDataPart(
+                "file", user.id,
+                File(imagePath).asRequestBody("application/octet-stream".toMediaTypeOrNull())
+            )
+            .addFormDataPart("filename", user.id)
+            .addFormDataPart("userID", user.id)
+            .build()
+
+        viewModelScope.launch {
+            when (val result = repository.updateProfileDetails(updateUserBody)) {
+                is NetworkResult.Success -> {
+                    clearErrorMessage()
+                    clearImageData()
+                    _dataState.postValue(State.SUCCESS)
+                }
+                is NetworkResult.Error -> {
+                    _dataState.postValue(State.ERROR)
+                    _errorMessage.value = result.exception
+                }
+                else -> {
+                    clearErrorMessage()
+                    _dataState.postValue(State.LOADING)
+                }
+            }
+        }
+    }
+
     fun setImageData(uri: Uri) {
         _imageURI.value = uri
     }
@@ -84,7 +123,7 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
         _dataState.value = null
     }
 
-    private fun clearImageData() {
+    fun clearImageData() {
         _imageURI.value = null
     }
 

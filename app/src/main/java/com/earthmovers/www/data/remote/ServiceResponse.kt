@@ -121,3 +121,8 @@ data class Notifications(
     val time: String,
     val details: String
 )
+
+data class UpdateResponse(
+    val message: String,
+    val response: UserResponse
+)
