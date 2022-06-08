@@ -100,8 +100,12 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel> {
         val response = remoteSource.getUserWithIdAsync(getUserBody)
         return try {
-            val result = response.body() as NetworkUserModel
-            NetworkResult.Success(result)
+            if (response.isSuccessful) {
+                val result = response.body() as NetworkUserModel
+                NetworkResult.Success(result)
+            } else {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
         } catch (e: Exception) {
             NetworkResult.Error("Something went wrong, please try again.")
         }
@@ -111,9 +115,13 @@ class MainRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             val response = remoteSource.getAllRemotePostsAsync()
             return@withContext try {
-                val result = response.body() as PostsResponseBody
+                if (response.isSuccessful) {
+                    val result = response.body() as PostsResponseBody
 
-                NetworkResult.Success(result)
+                    NetworkResult.Success(result)
+                } else {
+                    NetworkResult.Error("Something went wrong, please try again.")
+                }
             } catch (e: Exception) {
                 NetworkResult.Error("Something went wrong, please try again.")
             }
@@ -128,11 +136,15 @@ class MainRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             val response = remoteSource.getAllNotificationsAsync(notificationBody)
             return@withContext try {
-                val result = response.body() as NotificationResponse
-                if (result.response.isNotEmpty()) {
-                    localSource.saveNotifications(*result.toDbModel())
+                if (response.isSuccessful) {
+                    val result = response.body() as NotificationResponse
+                    if (result.response.isNotEmpty()) {
+                        localSource.saveNotifications(*result.toDbModel())
+                    }
+                    NetworkResult.Success(result)
+                } else {
+                    NetworkResult.Error("Something went wrong, please try again.")
                 }
-                NetworkResult.Success(result)
             } catch (e: Exception) {
                 NetworkResult.Error("Something went wrong, please try again.")
             }
@@ -148,19 +160,38 @@ class MainRepositoryImpl @Inject constructor(
             it.toDomainModel()
         }
 
-    override suspend fun updateProfileDetails(updateProfileBody: MultipartBody): NetworkResult<UpdateResponse> = withContext(dispatcher) {
-        val response = remoteSource.updateProfile(updateProfileBody)
-        return@withContext try {
-            val result = response.body() as UpdateResponse
+    override suspend fun updateProfileDetails(updateProfileBody: MultipartBody): NetworkResult<UpdateResponse> =
+        withContext(dispatcher) {
+            val response = remoteSource.updateProfile(updateProfileBody)
+            return@withContext try {
 
-            NetworkResult.Success(result)
-        } catch (e: Exception) {
-            NetworkResult.Error("Something went wrong, please try again.")
+                if (response.isSuccessful) {
+                    val result = response.body() as UpdateResponse
+                    NetworkResult.Success(result)
+                } else {
+                    NetworkResult.Error("Something went wrong, please try again.")
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
         }
-    }
 
     override suspend fun saveUserDetails(dbUser: DbUser) {
         localSource.saveLoggedUserInfo(dbUser)
     }
 
+    override suspend fun acceptOffer(acceptOfferBody: AcceptOfferBody): NetworkResult<AcceptOfferResponse> =
+        withContext(dispatcher) {
+            return@withContext try {
+                val result = remoteSource.acceptOffer(acceptOfferBody)
+                if (result.isSuccessful) {
+                    NetworkResult.Success(result.body() as AcceptOfferResponse)
+                } else {
+                    NetworkResult.Error("Something went wrong, please try again.")
+                }
+
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong, please try again.")
+            }
+        }
 }

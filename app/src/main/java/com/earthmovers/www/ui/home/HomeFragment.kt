@@ -97,4 +97,8 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home), PostClic
         findNavController().navigate(R.id.action_homeFragment_to_projectDetailsFragment)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.resetState()
+    }
 }

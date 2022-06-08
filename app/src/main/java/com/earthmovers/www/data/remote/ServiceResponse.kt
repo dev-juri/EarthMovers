@@ -24,6 +24,7 @@ data class UserNorm(
     val truck_plate_number: String? = null,
     val truck_src: String? = null
 )
+
 data class NetworkUserModel(
     val response: UserResponse
 )
@@ -44,6 +45,7 @@ data class UserResponse(
     val truck_plate_number: String? = null,
     val truck_src: String? = null
 )
+
 data class LoginResponseBody(
     val message: String,
     val token: String,
@@ -128,4 +130,22 @@ data class Notifications(
 data class UpdateResponse(
     val message: String,
     val response: UserResponse
+)
+
+data class AcceptOfferResponse(
+    val status: String,
+    val data: AcceptOfferResponseData
+)
+
+data class AcceptOfferResponseData(
+    val _id: String,
+    val name: String,
+    val phone: String,
+    val details: String,
+    val location: String,
+    val owner: String,
+    val image: String,
+    val createdAt: String,
+    val updatedAt: String,
+    val __v: Int
 )

@@ -41,4 +41,6 @@ interface MainRepository {
     suspend fun updateProfileDetails(updateProfileBody: MultipartBody): NetworkResult<UpdateResponse>
 
     suspend fun saveUserDetails(dbUser: DbUser)
+
+    suspend fun acceptOffer(acceptOfferBody: AcceptOfferBody): NetworkResult<AcceptOfferResponse>
 }
