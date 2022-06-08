@@ -76,6 +76,11 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
             when (it) {
                 State.SUCCESS -> {
                     viewModel.resetState()
+                    Toast.makeText(
+                        requireContext(),
+                        "Upload Successful",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 State.ERROR -> {
                     Toast.makeText(
@@ -88,7 +93,6 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
                     binding.profilePicture.setImageResource(R.drawable.ic_person)
                 }
                 else -> {
-                    binding.profilePicture.setImageResource(R.drawable.ic_person)
                 }
             }
         }
@@ -113,7 +117,6 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
             }
             imageResultLauncher.launch(intent)
         }
-
 
     }
 }

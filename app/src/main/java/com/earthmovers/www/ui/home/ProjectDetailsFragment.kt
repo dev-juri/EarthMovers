@@ -31,6 +31,7 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.resetState()
         observeDataState()
 
         binding.backButton.setOnClickListener {
