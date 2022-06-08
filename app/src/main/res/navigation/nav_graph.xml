@@ -75,7 +75,11 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.earthmovers.www.ui.notification.NotificationFragment"
-        android:label="NotificationFragment" />
+        android:label="NotificationFragment" >
+        <action
+            android:id="@+id/action_notificationFragment_to_notificationProfileDetailsFragment"
+            app:destination="@id/notificationProfileDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.earthmovers.www.ui.profile.ProfileFragment"
@@ -100,4 +104,8 @@
         android:id="@+id/profileDetailsFragment"
         android:name="com.earthmovers.www.ui.home.ProfileDetailsFragment"
         android:label="ProfileDetailsFragment" />
+    <fragment
+        android:id="@+id/notificationProfileDetailsFragment"
+        android:name="com.earthmovers.www.ui.notification.NotificationProfileDetailsFragment"
+        android:label="NotificationProfileDetailsFragment" />
 </navigation>

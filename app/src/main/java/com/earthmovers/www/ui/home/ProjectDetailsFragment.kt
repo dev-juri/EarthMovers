@@ -8,11 +8,13 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.earthmovers.www.R
 import com.earthmovers.www.data.State
+import com.earthmovers.www.data.domain.RecentProject
 import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.remote.GetUserBody
 import com.earthmovers.www.databinding.FragmentProjectDetailsBinding
 import com.earthmovers.www.ui.ProgressDialog
 import com.earthmovers.www.utils.BaseFragment
+import com.earthmovers.www.utils.isOnline
 import com.earthmovers.www.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +26,7 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
     private val progressDialog = ProgressDialog()
 
     private lateinit var userDetails: User
+    private lateinit var selectedPost: RecentProject
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +42,7 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
         }
 
         viewModel.selectedPost.observe(viewLifecycleOwner) {
+            selectedPost = it
             binding.nameOfPoster.text = it.name
             binding.jobDetails.text = it.projectHighlight
             binding.projectLocation.text = it.location
@@ -71,14 +75,28 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
         }
 
         binding.acceptOffer.setOnClickListener {
-            if (userDetails.src == null && userDetails.isVendor == false) {
+            if(userDetails.id == selectedPost.owner){
+                Toast.makeText(
+                    requireContext(),
+                    "You cannot accepted an offer you posted",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else if (userDetails.src == null && userDetails.isVendor == false) {
                 Toast.makeText(
                     requireContext(),
                     "You need to upload a picture and switch to a Vendor profile to accept an offer",
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                viewModel.acceptOffer(userDetails)
+                if (isOnline(requireContext())){
+                    viewModel.acceptOffer(userDetails)
+                }else {
+                    Toast.makeText(
+                        requireContext(),
+                        "No Internet Connection",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
 
@@ -90,6 +108,12 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
                 when (it) {
                     State.SUCCESS -> {
                         progressDialog.dismiss()
+                        Toast.makeText(
+                            requireContext(),
+                            "Offer Accepted Successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        findNavController().navigateUp()
                     }
                     State.ERROR -> {
                         progressDialog.dismiss()
@@ -108,4 +132,8 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.resetState()
+    }
 }

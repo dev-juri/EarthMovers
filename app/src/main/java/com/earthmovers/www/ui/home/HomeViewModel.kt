@@ -86,13 +86,9 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository) 
                     if (result.data.response.isNotEmpty()) {
                         repository.savePosts(result.data.toDbModel())
                     }
-                    _dataState.postValue(State.SUCCESS)
-                }
-                is NetworkResult.Error -> {
-                    _dataState.postValue(State.ERROR)
                 }
                 else -> {
-                    _dataState.postValue(State.LOADING)
+                    resetState()
                 }
             }
         }

@@ -7,8 +7,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.earthmovers.www.data.domain.DomainNotification
 import com.earthmovers.www.databinding.NotificationListItemBinding
+import com.earthmovers.www.utils.getFormattedDate
+import com.earthmovers.www.utils.getFormattedTime
 
-class NotificationAdapter :
+class NotificationAdapter(
+    private val notificationClickListener: NotificationClickListener
+) :
     ListAdapter<DomainNotification, NotificationAdapter.NotificationViewHolder>(
         NotificationDiffCallback
     ) {
@@ -20,13 +24,16 @@ class NotificationAdapter :
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         val notification = getItem(position)
         holder.bind(notification)
+        holder.binding.checkProfile.setOnClickListener {
+            notificationClickListener.checkProfile(notification.ID)
+        }
     }
 
-    class NotificationViewHolder constructor(private val binding: NotificationListItemBinding) :
+    class NotificationViewHolder constructor(val binding: NotificationListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(domainNotification: DomainNotification) {
             binding.notificationDetails.text = domainNotification.details
-            binding.date.text = domainNotification.time
+            binding.date.text = "${getFormattedTime(domainNotification.time)} ${getFormattedDate(domainNotification.time)}"
         }
 
         companion object {

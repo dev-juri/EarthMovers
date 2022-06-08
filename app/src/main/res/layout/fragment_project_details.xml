@@ -53,6 +53,7 @@
                 android:layout_margin="16dp"
                 app:cardBackgroundColor="@color/green"
                 app:cardCornerRadius="25dp"
+                app:layout_constraintEnd_toStartOf="@id/name_of_poster"
                 app:layout_constraintBottom_toBottomOf="@id/location_of_poster"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/name_of_poster">
@@ -82,10 +83,9 @@
                 android:id="@+id/location_of_poster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grayer"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/name_of_poster"
-                app:layout_constraintStart_toStartOf="@+id/name_of_poster"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@+id/profile_picture_card"
                 app:layout_constraintTop_toBottomOf="@+id/name_of_poster"
                 tools:text="Lousiana, USA" />
 
