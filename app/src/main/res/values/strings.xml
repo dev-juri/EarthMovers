@@ -53,4 +53,8 @@
     <string name="desc">Description</string>
     <string name="truck_num">Truck Plate Number</string>
     <string name="truck_image">Truck Image</string>
+    <string name="send">Send</string>
+    <string name="enter_new_password">Enter New password</string>
+    <string name="confirm_new_password">Confirm New password</string>
+    <string name="password_reset">Password Reset</string>
 </resources>
