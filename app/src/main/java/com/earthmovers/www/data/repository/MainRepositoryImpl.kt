@@ -97,9 +97,10 @@ class MainRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel> {
-        val response = remoteSource.getUserWithIdAsync(getUserBody)
-        return try {
+    override suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel> =
+    withContext(dispatcher) {
+        return@withContext try {
+            val response = remoteSource.getUserWithIdAsync(getUserBody)
             if (response.isSuccessful) {
                 val result = response.body() as NetworkUserModel
                 NetworkResult.Success(result)
@@ -162,9 +163,8 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun updateProfileDetails(updateProfileBody: MultipartBody): NetworkResult<UpdateResponse> =
         withContext(dispatcher) {
-            val response = remoteSource.updateProfile(updateProfileBody)
             return@withContext try {
-
+                val response = remoteSource.updateProfile(updateProfileBody)
                 if (response.isSuccessful) {
                     val result = response.body() as UpdateResponse
                     NetworkResult.Success(result)

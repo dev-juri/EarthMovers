@@ -86,6 +86,7 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository) 
                     if (result.data.response.isNotEmpty()) {
                         repository.savePosts(result.data.toDbModel())
                     }
+                    resetState()
                 }
                 else -> {
                     resetState()

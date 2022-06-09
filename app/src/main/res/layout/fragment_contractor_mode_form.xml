@@ -141,14 +141,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/truck_plate_number_box" />
 
-
             <ImageView
                 android:id="@+id/selected_image_preview"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:layout_margin="16dp"
                 android:contentDescription="@string/selected_image_preview"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

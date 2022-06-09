@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="Profile Picture"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_person" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -223,7 +223,7 @@
                     android:id="@+id/project_image"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/hauling_vehicle" />
             </com.google.android.material.card.MaterialCardView>
 
