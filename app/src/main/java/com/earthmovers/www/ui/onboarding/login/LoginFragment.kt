@@ -43,6 +43,10 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
         }
 
+        binding.forgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordConfirmationFragment)
+        }
+
         binding.loginButton.setOnClickListener {
             val email = binding.emailBox.editText?.text.toString().trim()
             val password = binding.passwordBox.editText?.text.toString().trim()

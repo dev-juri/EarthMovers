@@ -98,19 +98,19 @@ class MainRepositoryImpl @Inject constructor(
         }
 
     override suspend fun getUserWithId(getUserBody: GetUserBody): NetworkResult<NetworkUserModel> =
-    withContext(dispatcher) {
-        return@withContext try {
-            val response = remoteSource.getUserWithIdAsync(getUserBody)
-            if (response.isSuccessful) {
-                val result = response.body() as NetworkUserModel
-                NetworkResult.Success(result)
-            } else {
+        withContext(dispatcher) {
+            return@withContext try {
+                val response = remoteSource.getUserWithIdAsync(getUserBody)
+                if (response.isSuccessful) {
+                    val result = response.body() as NetworkUserModel
+                    NetworkResult.Success(result)
+                } else {
+                    NetworkResult.Error("Something went wrong, please try again.")
+                }
+            } catch (e: Exception) {
                 NetworkResult.Error("Something went wrong, please try again.")
             }
-        } catch (e: Exception) {
-            NetworkResult.Error("Something went wrong, please try again.")
         }
-    }
 
     override suspend fun getAllRemotePosts(): NetworkResult<PostsResponseBody> =
         withContext(dispatcher) {
@@ -192,6 +192,37 @@ class MainRepositoryImpl @Inject constructor(
 
             } catch (e: Exception) {
                 NetworkResult.Error("Something went wrong, please try again.")
+            }
+        }
+
+    override suspend fun forgotPassword(forgotPasswordBody: ForgotPasswordBody): NetworkResult<ForgotPasswordResponse> =
+        withContext(dispatcher) {
+            return@withContext try {
+                val response = remoteSource.forgotPassword(forgotPasswordBody)
+                if (response.isSuccessful && (response.body() as ForgotPasswordResponse).message == "An email has been sent to your address") {
+                    val data = response.body() as ForgotPasswordResponse
+                    NetworkResult.Success(data)
+                } else {
+                    NetworkResult.Error("User with email not found")
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong")
+            }
+        }
+
+    override suspend fun resetPassword(changePasswordBody: ChangePasswordBody): NetworkResult<ChangePasswordResponse> =
+        withContext(dispatcher) {
+            return@withContext try {
+                val response = remoteSource.resetPassword(changePasswordBody)
+                if (response.isSuccessful && (response.body() as ChangePasswordResponse).message == "Password Reset successful") {
+                    val data = response.body() as ChangePasswordResponse
+
+                    NetworkResult.Success(data)
+                } else {
+                    NetworkResult.Error("Something went wrong")
+                }
+            } catch (e: Exception) {
+                NetworkResult.Error("Something went wrong")
             }
         }
 }

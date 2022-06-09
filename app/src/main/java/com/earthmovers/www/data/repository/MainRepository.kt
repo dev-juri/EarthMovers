@@ -43,4 +43,8 @@ interface MainRepository {
     suspend fun saveUserDetails(dbUser: DbUser)
 
     suspend fun acceptOffer(acceptOfferBody: AcceptOfferBody): NetworkResult<AcceptOfferResponse>
+
+    suspend fun forgotPassword(forgotPasswordBody: ForgotPasswordBody): NetworkResult<ForgotPasswordResponse>
+
+    suspend fun resetPassword(changePasswordBody: ChangePasswordBody): NetworkResult<ChangePasswordResponse>
 }

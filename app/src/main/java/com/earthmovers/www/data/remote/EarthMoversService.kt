@@ -35,4 +35,10 @@ interface EarthMoversService {
 
     @POST("/update")
     suspend fun updateProfile(@Body updatedProfileBody: MultipartBody): Response<UpdateResponse>
+
+    @POST("forgot_password")
+    suspend fun forgotPassword(@Body forgotPasswordBody: ForgotPasswordBody): Response<ForgotPasswordResponse>
+
+    @POST("change-password")
+    suspend fun resetPassword(@Body changePasswordBody: ChangePasswordBody): Response<ChangePasswordResponse>
 }

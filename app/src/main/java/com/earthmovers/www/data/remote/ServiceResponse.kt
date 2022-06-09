@@ -149,3 +149,13 @@ data class AcceptOfferResponseData(
     val updatedAt: String,
     val __v: Int
 )
+
+data class ForgotPasswordResponse(
+    val _id: String,
+    val message: String
+)
+
+data class ChangePasswordResponse(
+    val message: String,
+    val response: UserNorm
+)

@@ -19,3 +19,12 @@ data class AcceptOfferBody(
     val accepterImage: String,
     val postID: String
 )
+
+data class ForgotPasswordBody(
+    val email: String
+)
+
+data class ChangePasswordBody(
+    val userID: String,
+    val password: String
+)
