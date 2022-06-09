@@ -151,7 +151,7 @@ data class AcceptOfferResponseData(
 )
 
 data class ForgotPasswordResponse(
-    val _id: String,
+    val id: String,
     val message: String
 )
 

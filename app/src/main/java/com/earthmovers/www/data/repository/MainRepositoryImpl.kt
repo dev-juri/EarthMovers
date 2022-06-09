@@ -199,7 +199,7 @@ class MainRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             return@withContext try {
                 val response = remoteSource.forgotPassword(forgotPasswordBody)
-                if (response.isSuccessful && (response.body() as ForgotPasswordResponse).message == "An email has been sent to your address") {
+                if (response.isSuccessful) {
                     val data = response.body() as ForgotPasswordResponse
                     NetworkResult.Success(data)
                 } else {

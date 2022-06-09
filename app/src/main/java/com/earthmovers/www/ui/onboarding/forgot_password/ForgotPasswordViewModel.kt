@@ -32,7 +32,7 @@ class ForgotPasswordViewModel @Inject constructor(private val repository: MainRe
             when (val result = repository.forgotPassword(forgotPasswordBody)) {
                 is NetworkResult.Success -> {
                     clearErrorMessage()
-                    _userID.value = result.data._id
+                    _userID.value = result.data.id
                     _dataState.postValue(State.SUCCESS)
                 }
                 is NetworkResult.Error -> {
