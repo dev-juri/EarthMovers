@@ -75,6 +75,10 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
             }
         }
 
+        binding.checkMap.setOnClickListener {
+            findNavController().navigate(R.id.action_projectDetailsFragment_to_mapsFragment)
+        }
+
         binding.acceptOffer.setOnClickListener {
             if(userDetails.id == selectedPost.owner){
                 Toast.makeText(

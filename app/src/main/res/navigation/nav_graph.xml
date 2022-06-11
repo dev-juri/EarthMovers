@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
     app:startDestination="@id/splashFragment">
 
@@ -102,6 +103,9 @@
         <action
             android:id="@+id/action_projectDetailsFragment_to_profileDetailsFragment"
             app:destination="@id/profileDetailsFragment" />
+        <action
+            android:id="@+id/action_projectDetailsFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileDetailsFragment"
@@ -131,4 +135,9 @@
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.earthmovers.www.ui.home.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
