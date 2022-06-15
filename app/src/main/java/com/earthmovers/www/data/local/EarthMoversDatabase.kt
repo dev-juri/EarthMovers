@@ -10,7 +10,7 @@ import com.earthmovers.www.data.local.entity.DbUser
 @Database(
     entities = [DbUser::class, DbRecentPost::class, DbNotification::class],
     version = 4,
-    exportSchema = true
+    exportSchema = false
 )
 abstract class EarthMoversDatabase : RoomDatabase() {
     abstract val earthMoversDao: EarthMoversDao

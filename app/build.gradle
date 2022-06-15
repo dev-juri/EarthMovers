@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.earthmovers.www"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -23,7 +23,6 @@ android {
 
         kapt {
             arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
                 arg("dagger.hilt.disableModulesHaveInstallInCheck", true)
             }
         }
@@ -59,8 +58,8 @@ android {
     }
     namespace 'com.earthmovers.www'
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlin.time.ExperimentalTime"]
-        kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+        kotlinOptions.freeCompilerArgs += ["-opt-in=kotlin.time.ExperimentalTime"]
+        kotlinOptions.freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     }
 }
 
@@ -87,6 +86,7 @@ dependencies {
     def coroutines = "1.5.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines"
 
     // retrofit for networking
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
@@ -142,4 +142,8 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'com.google.android.gms:play-services-location:20.0.0'
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    implementation 'com.github.AntonioHReyes:EasyRoutes:1.0.11'
 }

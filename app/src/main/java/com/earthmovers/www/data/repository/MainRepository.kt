@@ -1,5 +1,6 @@
 package com.earthmovers.www.data.repository
 
+
 import androidx.lifecycle.LiveData
 import com.earthmovers.www.data.NetworkResult
 import com.earthmovers.www.data.domain.DomainNotification
@@ -47,4 +48,6 @@ interface MainRepository {
     suspend fun forgotPassword(forgotPasswordBody: ForgotPasswordBody): NetworkResult<ForgotPasswordResponse>
 
     suspend fun resetPassword(changePasswordBody: ChangePasswordBody): NetworkResult<ChangePasswordResponse>
+
+    suspend fun getDirection(url: String): kotlinx.coroutines.flow.Flow<NetworkResult<Any>>
 }

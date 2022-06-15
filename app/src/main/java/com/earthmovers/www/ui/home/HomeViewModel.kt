@@ -13,12 +13,16 @@ import com.earthmovers.www.data.remote.AcceptOfferBody
 import com.earthmovers.www.data.remote.GetUserBody
 import com.earthmovers.www.data.remote.UserResponse
 import com.earthmovers.www.data.repository.MainRepository
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: MainRepository) : ViewModel() {
+
+    private val _projectLocation = MutableLiveData<LatLng>()
+    val projectLocation get() = _projectLocation
 
     private val _selectedPost = MutableLiveData<RecentProject>()
     val selectedPost: LiveData<RecentProject> get() = _selectedPost
@@ -38,6 +42,8 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository) 
     init {
         getRemotePosts()
     }
+
+    suspend fun getDirection(url: String) = repository.getDirection(url)
 
     fun acceptOffer(userDetails: User) {
         val acceptOfferBody = AcceptOfferBody(
@@ -105,5 +111,9 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository) 
 
     private fun clearErrorMessage() {
         _errorMessage.value = null
+    }
+
+    fun projectLocationReady(location: LatLng) {
+        _projectLocation.value = location
     }
 }
