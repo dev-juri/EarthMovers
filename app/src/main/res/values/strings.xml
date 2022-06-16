@@ -58,4 +58,6 @@
     <string name="confirm_new_password">Confirm New password</string>
     <string name="password_reset">Password Reset</string>
     <string name="reset">Reset</string>
+    <string name="live_map">Live Map</string>
+    <string name="distance">Distance</string>
 </resources>

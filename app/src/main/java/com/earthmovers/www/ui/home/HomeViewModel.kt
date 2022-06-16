@@ -43,8 +43,6 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository) 
         getRemotePosts()
     }
 
-    suspend fun getDirection(url: String) = repository.getDirection(url)
-
     fun acceptOffer(userDetails: User) {
         val acceptOfferBody = AcceptOfferBody(
             accepterID = userDetails.id,

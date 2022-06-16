@@ -49,5 +49,4 @@ interface MainRepository {
 
     suspend fun resetPassword(changePasswordBody: ChangePasswordBody): NetworkResult<ChangePasswordResponse>
 
-    suspend fun getDirection(url: String): kotlinx.coroutines.flow.Flow<NetworkResult<Any>>
 }

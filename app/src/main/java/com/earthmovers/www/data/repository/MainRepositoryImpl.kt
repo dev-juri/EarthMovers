@@ -12,10 +12,6 @@ import com.earthmovers.www.data.local.entity.DbUser
 import com.earthmovers.www.data.mapper.*
 import com.earthmovers.www.data.remote.*
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -230,23 +226,4 @@ class MainRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getDirection(url: String): Flow<NetworkResult<Any>> =
-        flow<NetworkResult<Any>> {
-            emit(NetworkResult.Loading)
-
-            val response = remoteSource.getDirection(url)
-
-            if (response.body()?.directionRouteModels?.size!! > 0) {
-                emit(NetworkResult.Success(response.body()!!))
-            } else {
-                emit(NetworkResult.Error(response.body()?.error!!))
-            }
-        }.flowOn(dispatcher)
-            .catch {
-                if (it.message.isNullOrEmpty()) {
-                    emit(NetworkResult.Error("No route found"))
-                } else {
-                    emit(NetworkResult.Error(it.message.toString()))
-                }
-            }
 }

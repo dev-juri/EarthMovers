@@ -15,29 +15,32 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.earthmovers.www.BuildConfig
 import com.earthmovers.www.R
-import com.earthmovers.www.data.NetworkResult
-import com.earthmovers.www.data.remote.DirectionLegModel
-import com.earthmovers.www.data.remote.DirectionResponseModel
-import com.earthmovers.www.data.remote.DirectionRouteModel
+import com.earthmovers.www.databinding.FragmentMapsBinding
 import com.earthmovers.www.utils.BaseFragment
 import com.earthmovers.www.utils.observeOnce
+import com.earthmovers.www.utils.viewBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.android.PolyUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import timber.log.Timber
+import org.json.JSONObject
 
 @AndroidEntryPoint
 class MapsFragment : BaseFragment(R.layout.fragment_maps), OnMapReadyCallback {
 
+    private val binding by viewBinding(FragmentMapsBinding::bind)
     private val viewModel by activityViewModels<HomeViewModel>()
     private var googleMap: GoogleMap? = null
     private var isLocationPermissionOk = false
@@ -175,13 +178,29 @@ class MapsFragment : BaseFragment(R.layout.fragment_maps), OnMapReadyCallback {
                                 )
                             ).title("Current Location")
                         )
+                        animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                LatLng(
+                                    currentLocation!!.latitude,
+                                    currentLocation!!.longitude
+                                ), 10f
+                            )
+                        )
                     }
                     getDirection(
                         "driving",
                         projectLocation,
                         LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                     )
-
+                    val result = FloatArray(1)
+                    Location.distanceBetween(
+                        currentLocation!!.latitude,
+                        currentLocation!!.longitude,
+                        projectLocation.latitude,
+                        projectLocation.longitude,
+                        result
+                    )
+                    binding.distance.text = "${result[0]/1000} KM"
                 }
             } else {
                 Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show()
@@ -197,142 +216,34 @@ class MapsFragment : BaseFragment(R.layout.fragment_maps), OnMapReadyCallback {
     }
 
     private fun getDirection(mode: String, start: LatLng, end: LatLng) {
+        val path: MutableList<List<LatLng>> = ArrayList()
+        val urlDirections = "https://maps.googleapis.com/maps/api/directions/json?" +
+                "origin=" + start.latitude + "," + start.longitude +
+                "&destination=" + end.latitude + "," + end.longitude +
+                "&sensor= false" +
+                "&mode=" + mode +
+                "&key=" + BuildConfig.MAPS_API_KEY
 
-        if (isLocationPermissionOk) {
-            val url = "https://maps.googleapis.com/maps/api/directions/json?" +
-                    "origin=" + start.latitude + "," + start.longitude +
-                    "&destination=" + end.latitude + "," + end.longitude +
-                    "&sensor= false" +
-                    "&mode=" + mode +
-                    "&key=" + BuildConfig.MAPS_API_KEY
-
-            lifecycleScope.launchWhenStarted {
-                viewModel.getDirection(url).collect {
-                    when (it) {
-                        is NetworkResult.Loading -> {}
-
-                        is NetworkResult.Success -> {
-                            val directionResponseModel: DirectionResponseModel =
-                                it.data as DirectionResponseModel
-                            val routeModel: DirectionRouteModel =
-                                directionResponseModel.directionRouteModels!![0]
-
-                            val legModel: DirectionLegModel = routeModel.legs?.get(0)!!
-
-                            val stepList: MutableList<LatLng> = ArrayList()
-
-                            val options = PolylineOptions().apply {
-                                width(25f)
-                                color(Color.BLUE)
-                                geodesic(true)
-                                clickable(true)
-                                visible(true)
-                            }
-
-                            val pattern: List<PatternItem>
-
-                            if (mode == "walking") {
-                                pattern = listOf(
-                                    Dot(), Gap(10f)
-                                )
-
-                                options.jointType(JointType.ROUND)
-                            } else {
-
-                                pattern = listOf(
-                                    Dash(30f)
-                                )
-
-                            }
-
-                            options.pattern(pattern)
-                            for (stepModel in legModel.steps!!) {
-                                val decodedList = decode(stepModel.polyline?.points!!)
-                                for (latLng in decodedList) {
-                                    stepList.add(
-                                        LatLng(
-                                            latLng.latitude,
-                                            latLng.longitude
-                                        )
-                                    )
-                                }
-                            }
-
-                            options.addAll(stepList)
-                            googleMap?.addPolyline(options)
-                            val startLocation = LatLng(
-                                legModel.startLocation?.lat!!,
-                                legModel.startLocation.lng!!
-                            )
-
-                            val endLocation = LatLng(
-                                legModel.endLocation?.lat!!,
-                                legModel.endLocation.lng!!
-                            )
-
-                            googleMap?.addMarker(
-                                MarkerOptions()
-                                    .position(endLocation)
-                                    .title("End Location")
-                            )
-
-                            googleMap?.addMarker(
-                                MarkerOptions()
-                                    .position(startLocation)
-                                    .title("Start Location")
-                            )
-
-                            val builder = LatLngBounds.builder()
-                            builder.include(endLocation).include(startLocation)
-                            val latLngBounds = builder.build()
-
-
-                            googleMap?.animateCamera(
-                                CameraUpdateFactory.newLatLngBounds(
-                                    latLngBounds, 0
-                                )
-                            )
-                        }
-                        is NetworkResult.Error -> {
-                            Timber.tag("Femi").v(it.exception.toString())
-                            Toast.makeText(
-                                requireContext(), it.toString(),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
+        val directionsRequest = object :
+            StringRequest(Method.GET, urlDirections, Response.Listener { response ->
+                val jsonResponse = JSONObject(response)
+                // Get routes
+                val routes = jsonResponse.getJSONArray("routes")
+                val legs = routes.getJSONObject(0).getJSONArray("legs")
+                val steps = legs.getJSONObject(0).getJSONArray("steps")
+                for (i in 0 until steps.length()) {
+                    val points =
+                        steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                    path.add(PolyUtil.decode(points))
                 }
-            }
-        }
+                for (i in 0 until path.size) {
+                    this.googleMap!!.addPolyline(
+                        PolylineOptions().addAll(path[i]).color(Color.GREEN)
+                    )
+                }
+            }, Response.ErrorListener { _ ->
+            }) {}
+        val requestQueue = Volley.newRequestQueue(requireContext())
+        requestQueue.add(directionsRequest)
     }
-
-    private fun decode(points: String): List<LatLng> {
-        val len = points.length
-        val path: MutableList<LatLng> = ArrayList(len / 2)
-        var index = 0
-        var lat = 0
-        var lng = 0
-        while (index < len) {
-            var result = 1
-            var shift = 0
-            var b: Int
-            do {
-                b = points[index++].code - 63 - 1
-                result += b shl shift
-                shift += 5
-            } while (b >= 0x1f)
-            lat += if (result and 1 != 0) (result shr 1).inv() else result shr 1
-            result = 1
-            shift = 0
-            do {
-                b = points[index++].code - 63 - 1
-                result += b shl shift
-                shift += 5
-            } while (b >= 0x1f)
-            lng += if (result and 1 != 0) (result shr 1).inv() else result shr 1
-            path.add(LatLng(lat * 1e-5, lng * 1e-5))
-        }
-        return path
-    }
-
 }
