@@ -49,14 +49,16 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home), PostClic
         binding.viewpager.adapter = viewPagerAdapter
         binding.indicator.setViewPager(binding.viewpager)
 
-        recentProjectRecyclerAdapter = RecentProjectsAdapter(this)
-        binding.recentProjectRecycler.adapter = recentProjectRecyclerAdapter
-
         viewModel.user.observe(viewLifecycleOwner) {
             binding.welcome.text = "Welcome \n${(it?.name)?.split(" ")?.get(0)}"
         }
+
+
+        recentProjectRecyclerAdapter = RecentProjectsAdapter(this)
+        binding.recentProjectRecycler.adapter = recentProjectRecyclerAdapter
+
         viewModel.posts.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
+            if (it.isNullOrEmpty()) {
                 binding.noPostEmptyState.setVisible()
                 binding.recentProjectRecycler.setGone()
             } else {
@@ -66,26 +68,24 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home), PostClic
             }
 
         }
-
     }
-
 
     private fun observeDataState() {
         viewModel.dataState.observe(viewLifecycleOwner) {
             if (it != null) {
                 when (it) {
                     State.SUCCESS -> {
-                        binding.progressBar.setGone()
+                        //binding.progressBar.setGone()
 
                         viewModel.resetState()
                     }
                     State.ERROR -> {
-                        binding.progressBar.setGone()
+                        //binding.progressBar.setGone()
 
                         viewModel.resetState()
                     }
                     else -> {
-                        binding.progressBar.setVisible()
+                        //binding.progressBar.setVisible()
                     }
                 }
             }
@@ -101,4 +101,10 @@ class HomeFragment : BottomNavTopLevelFragment(R.layout.fragment_home), PostClic
         super.onDestroy()
         viewModel.resetState()
     }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getRemotePosts()
+    }
+
 }

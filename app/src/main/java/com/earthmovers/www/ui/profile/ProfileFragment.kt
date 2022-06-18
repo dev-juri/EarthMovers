@@ -4,10 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.earthmovers.www.R
@@ -76,18 +74,8 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
             when (it) {
                 State.SUCCESS -> {
                     viewModel.resetState()
-                    Toast.makeText(
-                        requireContext(),
-                        "Upload Successful",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
                 State.ERROR -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Couldn't upload image, Please try again",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     viewModel.clearImageData()
                     viewModel.resetState()
                     binding.profilePicture.setImageResource(R.drawable.ic_person)
@@ -118,5 +106,14 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
             imageResultLauncher.launch(intent)
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.profileLoaded.observeOnce(viewLifecycleOwner) {
+            if (it != null) {
+                viewModel.getUserWithId(user)
+            }
+        }
     }
 }

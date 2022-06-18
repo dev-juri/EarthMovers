@@ -200,7 +200,7 @@ class MapsFragment : BaseFragment(R.layout.fragment_maps), OnMapReadyCallback {
                         projectLocation.longitude,
                         result
                     )
-                    binding.distance.text = "${result[0]/1000} KM"
+                    binding.distance.text = "${result[0] / 1000} KM"
                 }
             } else {
                 Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show()
@@ -227,21 +227,30 @@ class MapsFragment : BaseFragment(R.layout.fragment_maps), OnMapReadyCallback {
         val directionsRequest = object :
             StringRequest(Method.GET, urlDirections, Response.Listener { response ->
                 val jsonResponse = JSONObject(response)
-                // Get routes
-                val routes = jsonResponse.getJSONArray("routes")
-                val legs = routes.getJSONObject(0).getJSONArray("legs")
-                val steps = legs.getJSONObject(0).getJSONArray("steps")
-                for (i in 0 until steps.length()) {
-                    val points =
-                        steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-                    path.add(PolyUtil.decode(points))
+                try {
+                    // Get routes
+                    val routes = jsonResponse.getJSONArray("routes")
+                    val legs = routes.getJSONObject(0).getJSONArray("legs")
+                    val steps = legs.getJSONObject(0).getJSONArray("steps")
+                    for (i in 0 until steps.length()) {
+                        val points =
+                            steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                        path.add(PolyUtil.decode(points))
+                    }
+                    for (i in 0 until path.size) {
+                        this.googleMap!!.addPolyline(
+                            PolylineOptions().addAll(path[i]).color(Color.GREEN)
+                        )
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Location not in driving range",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                for (i in 0 until path.size) {
-                    this.googleMap!!.addPolyline(
-                        PolylineOptions().addAll(path[i]).color(Color.GREEN)
-                    )
-                }
-            }, Response.ErrorListener { _ ->
+            }, Response.ErrorListener { error ->
+                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
             }) {}
         val requestQueue = Volley.newRequestQueue(requireContext())
         requestQueue.add(directionsRequest)
