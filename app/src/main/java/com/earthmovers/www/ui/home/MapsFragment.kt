@@ -200,7 +200,7 @@ class MapsFragment : BaseFragment(R.layout.fragment_maps), OnMapReadyCallback {
                         projectLocation.longitude,
                         result
                     )
-                    binding.distance.text = "${result[0] / 1000} KM"
+                    binding.distance.text = "${result[0] / 1609} Miles"
                 }
             } else {
                 Toast.makeText(requireContext(), "Location not found", Toast.LENGTH_SHORT).show()
