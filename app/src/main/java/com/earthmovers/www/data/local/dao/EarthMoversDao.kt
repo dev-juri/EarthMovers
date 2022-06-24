@@ -2,7 +2,10 @@ package com.earthmovers.www.data.local.dao
 
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.earthmovers.www.data.local.entity.DbNotification
 import com.earthmovers.www.data.local.entity.DbRecentPost
 import com.earthmovers.www.data.local.entity.DbUser
@@ -19,13 +22,13 @@ interface EarthMoversDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveRecentPosts(vararg posts: DbRecentPost)
 
-    @Query("SELECT * from RecentPosts ORDER by updatedAt")
+    @Query("SELECT * from RecentPosts ORDER by updatedAt DESC")
     fun fetchAllRecentPosts(): LiveData<List<DbRecentPost>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveNotifications(vararg notifications: DbNotification)
 
-    @Query("SELECT * from Notifications ORDER by time")
+    @Query("SELECT * from Notifications ORDER by time DESC")
     fun getAllNotifications(): LiveData<List<DbNotification>>
 
     @Query("SELECT * from RecentPosts WHERE id=:id")
