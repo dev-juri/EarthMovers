@@ -31,15 +31,15 @@ class MainRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             return@withContext try {
                 val response = remoteSource.login(loginBody)
-                if (response.isSuccessful && (response.body() as LoginResponseBody).message == "Login Succesful") {
+                if (response.isSuccessful && (response.body() as LoginResponseBody).id.isNotEmpty()) {
                     val data = response.body() as LoginResponseBody
                     saveUserDetails(data.toDatabaseModel())
                     NetworkResult.Success(data)
                 } else {
-                    NetworkResult.Error("Incorrect username or password")
+                    NetworkResult.Error("Incorrect username or password.")
                 }
             } catch (e: Exception) {
-                NetworkResult.Error("Incorrect username or password")
+                NetworkResult.Error("Something went wrong, please try again.")
             }
         }
 
@@ -47,15 +47,15 @@ class MainRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             return@withContext try {
                 val response = remoteSource.register(signupBody)
-                if (response.isSuccessful && (response.body() as RegisterResponseBody).message == "Login Successful") {
+                if (response.isSuccessful && (response.body() as RegisterResponseBody).id.isNotEmpty()) {
                     val data = response.body() as RegisterResponseBody
                     saveUserDetails(data.toDatabaseModel())
                     NetworkResult.Success(data)
                 } else {
-                    NetworkResult.Error("User exists, proceed to login")
+                    NetworkResult.Error("User exists, proceed to login.")
                 }
             } catch (e: Exception) {
-                NetworkResult.Error("User exists, proceed to login")
+                NetworkResult.Error("Something went wrong, Please try again.")
             }
         }
 
@@ -89,7 +89,7 @@ class MainRepositoryImpl @Inject constructor(
 
                     NetworkResult.Success(data)
                 } else {
-                    NetworkResult.Error("Something went wrong")
+                    NetworkResult.Error("Something went wrong, please try again.")
                 }
             } catch (e: Exception) {
                 NetworkResult.Error("Something went wrong, please try again.")
@@ -218,10 +218,10 @@ class MainRepositoryImpl @Inject constructor(
 
                     NetworkResult.Success(data)
                 } else {
-                    NetworkResult.Error("Something went wrong")
+                    NetworkResult.Error("Something went wrong, please try again.")
                 }
             } catch (e: Exception) {
-                NetworkResult.Error("Something went wrong")
+                NetworkResult.Error("Something went wrong, please try again.")
             }
         }
 

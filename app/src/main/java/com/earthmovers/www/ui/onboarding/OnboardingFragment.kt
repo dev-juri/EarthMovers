@@ -2,12 +2,10 @@ package com.earthmovers.www.ui.onboarding
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.earthmovers.www.R
@@ -29,7 +27,6 @@ class OnboardingFragment : BaseFragment(R.layout.fragment_onboarding) {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
         val timer = object : CountDownTimer(8000, 1000) {
-            @RequiresApi(Build.VERSION_CODES.M)
             override fun onTick(p0: Long) {
                 when {
                     p0 > 6000L -> {

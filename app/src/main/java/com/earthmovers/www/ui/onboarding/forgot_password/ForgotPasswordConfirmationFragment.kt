@@ -1,13 +1,10 @@
 package com.earthmovers.www.ui.onboarding.forgot_password
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.earthmovers.www.R
 import com.earthmovers.www.data.State
@@ -28,7 +25,6 @@ class ForgotPasswordConfirmationFragment :
 
     private val progressDialog = ProgressDialog()
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

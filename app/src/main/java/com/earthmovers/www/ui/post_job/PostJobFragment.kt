@@ -2,12 +2,10 @@ package com.earthmovers.www.ui.post_job
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.earthmovers.www.R
 import com.earthmovers.www.data.State
@@ -25,7 +23,6 @@ class PostJobFragment : BottomNavTopLevelFragment(R.layout.fragment_post_job) {
     private val progressDialog = ProgressDialog()
 
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

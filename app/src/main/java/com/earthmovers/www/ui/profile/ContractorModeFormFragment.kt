@@ -2,12 +2,10 @@ package com.earthmovers.www.ui.profile
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.earthmovers.www.R
@@ -23,7 +21,6 @@ class ContractorModeFormFragment : BaseFragment(R.layout.fragment_contractor_mod
     private val viewModel: ProfileViewModel by activityViewModels()
     private val progressDialog = ProgressDialog()
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

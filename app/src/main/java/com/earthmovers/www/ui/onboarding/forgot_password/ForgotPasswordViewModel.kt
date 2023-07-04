@@ -7,11 +7,9 @@ import com.earthmovers.www.data.NetworkResult
 import com.earthmovers.www.data.State
 import com.earthmovers.www.data.remote.ChangePasswordBody
 import com.earthmovers.www.data.remote.ForgotPasswordBody
-import com.earthmovers.www.data.remote.LoginBody
 import com.earthmovers.www.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel

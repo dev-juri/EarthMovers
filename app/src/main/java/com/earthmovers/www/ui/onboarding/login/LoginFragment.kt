@@ -1,11 +1,9 @@
 package com.earthmovers.www.ui.onboarding.login
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,11 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     private val binding by viewBinding(FragmentLoginBinding::bind)
-    var areFieldsValidated = false
+    private var areFieldsValidated = false
     private val viewModel: OnboardingViewModel by viewModels()
     private val progressDialog = ProgressDialog()
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

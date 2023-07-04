@@ -56,6 +56,7 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
                 .load(it.image)
                 .centerCrop()
                 .placeholder(R.drawable.ic_image_placeholder)
+                .dontAnimate()
                 .into(binding.projectImage)
         }
 
@@ -65,6 +66,7 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
                     .load(it.src)
                     .centerCrop()
                     .placeholder(R.drawable.ic_person)
+                    .dontAnimate()
                     .into(binding.profilePicture)
             }
         }

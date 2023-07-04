@@ -38,6 +38,7 @@ class ProfileDetailsFragment : BaseFragment(R.layout.fragment_profile) {
                     .load(it.src)
                     .centerCrop()
                     .placeholder(R.drawable.ic_person)
+                    .dontAnimate()
                     .into(binding.profilePicture)
             }
             if (it.isVendor == true) {

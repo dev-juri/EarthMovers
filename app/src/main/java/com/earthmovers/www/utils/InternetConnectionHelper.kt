@@ -4,10 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.annotation.RequiresApi
 
 /*Check if phone is connected*/
-@RequiresApi(Build.VERSION_CODES.M)
 fun isOnline(context: Context): Boolean {
     val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -23,8 +21,8 @@ fun isOnline(context: Context): Boolean {
             }
         }
     } else {
-        val activeNetworlkInfo = connectivityManager.activeNetwork
-        if (activeNetworlkInfo != null) {
+        val activeNetworkInfo = connectivityManager.activeNetwork
+        if (activeNetworkInfo != null) {
             return true
         }
 
