@@ -62,7 +62,7 @@ class MapsFragment : BaseFragment(R.layout.fragment_maps), OnMapReadyCallback {
         viewModel.selectedPost.observeOnce(viewLifecycleOwner) {
             try {
                 val address: List<Address> =
-                    Geocoder(requireContext()).getFromLocationName(it.location, 5)
+                    Geocoder(requireContext()).getFromLocationName(it.location, 5) as List<Address>
                 val location = address[0]
                 val lat = location.latitude
                 val long = location.longitude

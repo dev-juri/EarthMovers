@@ -1,7 +1,7 @@
 package com.earthmovers.www.data.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import com.earthmovers.www.data.NetworkResult
 import com.earthmovers.www.data.domain.DomainNotification
 import com.earthmovers.www.data.domain.RecentProject
@@ -23,10 +23,9 @@ class MainRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : MainRepository {
 
-    override fun fetchUserDetailsIfAny(): LiveData<User?> =
-        Transformations.map(localSource.getLoggedUserInfo()) {
-            it.toDomainUSer()
-        }
+    override fun fetchUserDetailsIfAny(): LiveData<User?> = localSource.getLoggedUserInfo().map {
+        it.toDomainUSer()
+    }
 
     override suspend fun login(loginBody: LoginBody): NetworkResult<LoginResponseBody> =
         withContext(dispatcher) {
@@ -61,7 +60,7 @@ class MainRepositoryImpl @Inject constructor(
         }
 
     override fun fetchRecentPostsFromDb(): LiveData<List<RecentProject>> =
-        Transformations.map(localSource.fetchAllRecentPosts()) {
+        localSource.fetchAllRecentPosts().map {
             it.toDomainPost()
         }
 
@@ -152,12 +151,12 @@ class MainRepositoryImpl @Inject constructor(
         }
 
     override fun fetchNotifications(): LiveData<List<DomainNotification>> =
-        Transformations.map(localSource.getAllNotifications()) {
+        localSource.getAllNotifications().map {
             it.toDomainNotification()
         }
 
     override fun getDbPostWithId(id: String): LiveData<RecentProject> =
-        Transformations.map(localSource.getPostDetails(id)) {
+        localSource.getPostDetails(id).map {
             it.toDomainModel()
         }
 
