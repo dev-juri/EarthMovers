@@ -6,7 +6,10 @@ import com.earthmovers.www.data.domain.User
 import com.earthmovers.www.data.local.entity.DbNotification
 import com.earthmovers.www.data.local.entity.DbRecentPost
 import com.earthmovers.www.data.local.entity.DbUser
-import com.earthmovers.www.data.remote.*
+import com.earthmovers.www.data.remote.LoginResponseBody
+import com.earthmovers.www.data.remote.NotificationResponse
+import com.earthmovers.www.data.remote.PostsResponseBody
+import com.earthmovers.www.data.remote.RegisterResponseBody
 
 fun RegisterResponseBody.toDatabaseModel(): DbUser {
     return this.let {
@@ -118,7 +121,7 @@ fun List<DbNotification>.toDomainNotification(): List<DomainNotification> {
 }
 
 fun NotificationResponse.toDbModel(): Array<DbNotification> {
-    return response.map {
+    return response!!.map {
         DbNotification(
             name = it.name,
             image = it.image,

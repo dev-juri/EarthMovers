@@ -136,14 +136,16 @@ class MainRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             val response = remoteSource.getAllNotificationsAsync(notificationBody)
             return@withContext try {
-                if (response.isSuccessful) {
+                if (response.isSuccessful && response.body()?.error?.isEmpty() == true) {
                     val result = response.body() as NotificationResponse
-                    if (result.response.isNotEmpty()) {
+                    if (result.response?.isNotEmpty() == true) {
                         localSource.saveNotifications(*result.toDbModel())
                     }
                     NetworkResult.Success(result)
                 } else {
-                    NetworkResult.Error("Something went wrong, please try again.")
+                    NetworkResult.Error(
+                        response.body()?.message ?: "Something went wrong, please try again."
+                    )
                 }
             } catch (e: Exception) {
                 NetworkResult.Error("Something went wrong, please try again.")

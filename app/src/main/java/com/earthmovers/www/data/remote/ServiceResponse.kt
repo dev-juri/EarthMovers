@@ -98,8 +98,10 @@ data class CreateVendorResponse(
 )
 
 data class NotificationResponse(
-    val status: String,
-    val response: List<Notifications>
+    val error: Any? = null,
+    val message: String? = null,
+    val status: String? = null,
+    val response: List<Notifications>? = null
 )
 
 data class CVUserResponse(
