@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.earthmovers.www.ui.splash.SplashFragment"
+        android:name="com.earthmovers.app.ui.splash.SplashFragment"
         android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_onboardingFragment"
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.earthmovers.www.ui.onboarding.OnboardingFragment"
+        android:name="com.earthmovers.app.ui.onboarding.OnboardingFragment"
         android:label="OnboardingFragment">
         <action
             android:id="@+id/action_onboardingFragment_to_signupFragment"
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.earthmovers.www.ui.onboarding.signup.SignupFragment"
+        android:name="com.earthmovers.app.ui.onboarding.signup.SignupFragment"
         android:label="SignupFragment">
         <action
             android:id="@+id/action_signupFragment_to_loginFragment"
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.earthmovers.www.ui.onboarding.login.LoginFragment"
+        android:name="com.earthmovers.app.ui.onboarding.login.LoginFragment"
         android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.earthmovers.www.ui.home.HomeFragment"
+        android:name="com.earthmovers.app.ui.home.HomeFragment"
         android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_projectDetailsFragment"
@@ -74,11 +74,11 @@
     </fragment>
     <fragment
         android:id="@+id/postJobFragment"
-        android:name="com.earthmovers.www.ui.post_job.PostJobFragment"
+        android:name="com.earthmovers.app.ui.post_job.PostJobFragment"
         android:label="PostJobFragment" />
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.earthmovers.www.ui.notification.NotificationFragment"
+        android:name="com.earthmovers.app.ui.notification.NotificationFragment"
         android:label="NotificationFragment" >
         <action
             android:id="@+id/action_notificationFragment_to_notificationProfileDetailsFragment"
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.earthmovers.www.ui.profile.ProfileFragment"
+        android:name="com.earthmovers.app.ui.profile.ProfileFragment"
         android:label="ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_contractorModeFormFragment"
@@ -94,11 +94,11 @@
     </fragment>
     <fragment
         android:id="@+id/contractorModeFormFragment"
-        android:name="com.earthmovers.www.ui.profile.ContractorModeFormFragment"
+        android:name="com.earthmovers.app.ui.profile.ContractorModeFormFragment"
         android:label="ContractorModeFormFragment" />
     <fragment
         android:id="@+id/projectDetailsFragment"
-        android:name="com.earthmovers.www.ui.home.ProjectDetailsFragment"
+        android:name="com.earthmovers.app.ui.home.ProjectDetailsFragment"
         android:label="ProjectDetailsFragment" >
         <action
             android:id="@+id/action_projectDetailsFragment_to_profileDetailsFragment"
@@ -109,15 +109,15 @@
     </fragment>
     <fragment
         android:id="@+id/profileDetailsFragment"
-        android:name="com.earthmovers.www.ui.home.ProfileDetailsFragment"
+        android:name="com.earthmovers.app.ui.home.ProfileDetailsFragment"
         android:label="ProfileDetailsFragment" />
     <fragment
         android:id="@+id/notificationProfileDetailsFragment"
-        android:name="com.earthmovers.www.ui.notification.NotificationProfileDetailsFragment"
+        android:name="com.earthmovers.app.ui.notification.NotificationProfileDetailsFragment"
         android:label="NotificationProfileDetailsFragment" />
     <fragment
         android:id="@+id/forgotPasswordConfirmationFragment"
-        android:name="com.earthmovers.www.ui.onboarding.forgot_password.ForgotPasswordConfirmationFragment"
+        android:name="com.earthmovers.app.ui.onboarding.forgot_password.ForgotPasswordConfirmationFragment"
         android:label="ForgotPasswordConfirmationFragment" >
         <action
             android:id="@+id/action_forgotPasswordConfirmationFragment_to_resetPasswordFragment"
@@ -127,7 +127,7 @@
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.earthmovers.www.ui.onboarding.forgot_password.ResetPasswordFragment"
+        android:name="com.earthmovers.app.ui.onboarding.forgot_password.ResetPasswordFragment"
         android:label="ResetPasswordFragment" >
         <action
             android:id="@+id/action_resetPasswordFragment_to_loginFragment"
@@ -137,7 +137,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.earthmovers.www.ui.home.MapsFragment"
+        android:name="com.earthmovers.app.ui.home.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
 </navigation>
