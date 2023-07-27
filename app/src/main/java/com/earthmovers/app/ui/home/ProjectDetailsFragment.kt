@@ -82,7 +82,7 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
         }
 
         binding.acceptOffer.setOnClickListener {
-            if(userDetails.id == selectedPost.owner){
+            if (userDetails.id == selectedPost.owner) {
                 Toast.makeText(
                     requireContext(),
                     "You cannot accepted an offer you posted",
@@ -95,12 +95,20 @@ class ProjectDetailsFragment : BaseFragment(R.layout.fragment_project_details) {
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                if (isOnline(requireContext())){
-                    viewModel.acceptOffer(userDetails)
-                }else {
+                if (isOnline(requireContext())) {
+                    if (userDetails.src != null) {
+                        viewModel.acceptOffer(userDetails)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Kindly update your profile and upload a profile picture.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                } else {
                     Toast.makeText(
                         requireContext(),
-                        "No Internet Connection",
+                        "No Internet Connection.",
                         Toast.LENGTH_LONG
                     ).show()
                 }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -67,6 +68,37 @@ class ProfileFragment : BottomNavTopLevelFragment(R.layout.fragment_profile) {
         viewModel.imageURI.observe(viewLifecycleOwner) {
             if (it != null) {
                 viewModel.updateUser(requireContext(), user)
+            }
+        }
+
+        viewModel.profilePicState.observe(viewLifecycleOwner) {
+            when (it) {
+                State.SUCCESS -> {
+                    viewModel.resetState()
+                    Toast.makeText(
+                        requireContext(),
+                        "Profile picture uploaded successfully.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                State.ERROR -> {
+                    viewModel.clearImageData()
+                    viewModel.resetState()
+                    Toast.makeText(
+                        requireContext(),
+                        "Something went wrong, please try again later.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    binding.profilePicture.setImageResource(R.drawable.ic_person)
+                }
+                State.LOADING -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Uploading...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {}
             }
         }
 

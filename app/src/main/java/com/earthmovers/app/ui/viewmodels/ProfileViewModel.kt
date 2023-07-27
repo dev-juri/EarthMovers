@@ -33,6 +33,9 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
     private val _dataState = MutableLiveData<State?>()
     val dataState get() = _dataState
 
+    private val _profilePicState = MutableLiveData<State?>()
+    val profilePicState get() = _profilePicState
+
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage get() = _errorMessage
 
@@ -136,15 +139,15 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
                 is NetworkResult.Success -> {
                     clearErrorMessage()
                     clearImageData()
-                    _dataState.postValue(State.SUCCESS)
+                    _profilePicState.postValue(State.SUCCESS)
                 }
                 is NetworkResult.Error -> {
-                    _dataState.postValue(State.ERROR)
+                    _profilePicState.postValue(State.ERROR)
                     _errorMessage.value = result.exception
                 }
                 else -> {
                     clearErrorMessage()
-                    _dataState.postValue(State.LOADING)
+                    _profilePicState.postValue(State.LOADING)
                 }
             }
         }
@@ -156,6 +159,7 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
 
     fun resetState() {
         _dataState.value = null
+        _profilePicState.value = null
     }
 
     fun clearImageData() {
