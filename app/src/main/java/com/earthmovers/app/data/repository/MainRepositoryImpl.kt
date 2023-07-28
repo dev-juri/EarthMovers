@@ -125,7 +125,7 @@ class MainRepositoryImpl @Inject constructor(
                 val response = remoteSource.getAllRemotePostsAsync()
                 if (response.isSuccessful) {
                     val result = response.body() as PostsResponseBody
-
+                    localSource.deleteAllPosts()
                     NetworkResult.Success(result)
                 } else {
                     NetworkResult.Error("Something went wrong, please try again.")
@@ -144,11 +144,10 @@ class MainRepositoryImpl @Inject constructor(
         withContext(dispatcher) {
             return@withContext try {
                 val response = remoteSource.getAllNotificationsAsync(notificationBody)
-                if (response.isSuccessful && response.body()?.error?.toString()
-                        ?.isEmpty() == true
-                ) {
+                if (response.isSuccessful) {
                     val result = response.body() as NotificationResponse
-                    if (result.response?.isNotEmpty() == true) {
+                    if (result.status == "success") {
+                        localSource.deleteAllNotifications()
                         localSource.saveNotifications(*result.toDbModel())
                     }
                     NetworkResult.Success(result)

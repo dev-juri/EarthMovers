@@ -36,4 +36,7 @@ interface EarthMoversDao {
 
     @Query("DELETE from RecentPosts")
     suspend fun deleteAllPosts()
+
+    @Query("DELETE from Notifications")
+    suspend fun deleteAllNotifications()
 }

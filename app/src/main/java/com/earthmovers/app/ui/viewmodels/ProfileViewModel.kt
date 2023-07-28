@@ -135,6 +135,7 @@ class ProfileViewModel @Inject constructor(private val repository: MainRepositor
             .build()
 
         viewModelScope.launch {
+            _profilePicState.postValue(State.LOADING)
             when (val result = repository.updateProfileDetails(updateUserBody)) {
                 is NetworkResult.Success -> {
                     clearErrorMessage()

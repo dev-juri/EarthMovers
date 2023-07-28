@@ -88,6 +88,7 @@ class HomeViewModel @Inject constructor(private val repository: MainRepository) 
             when (val result = repository.getAllRemotePosts()) {
                 is NetworkResult.Success -> {
                     if (result.data.response.isNotEmpty()) {
+
                         repository.savePosts(result.data.toDbModel())
                     }
                     resetState()
